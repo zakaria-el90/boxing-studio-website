@@ -86,6 +86,7 @@ managed services (authentication + database). To enable Phase 2:
    - `SUPABASE_URL`
    - `SUPABASE_ANON_KEY`
 4. Create at least one admin user in Supabase Auth.
+5. Use the reference schema in `db/members_schema.sql` to create the table and policies.
 
 The admin UI only tracks payment status (e.g., “Up to Date”) and never stores card data.
 
