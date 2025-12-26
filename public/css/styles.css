@@ -115,6 +115,58 @@ main {
     border-bottom: 1px solid rgba(15, 23, 42, 0.1);
 }
 
+.contact-form {
+    margin-top: 28px;
+    padding-top: 20px;
+    border-top: 2px dashed rgba(15, 23, 42, 0.15);
+}
+
+.contact-form h2 {
+    margin-top: 0;
+    font-size: 24px;
+}
+
+.form-note {
+    font-size: 15px;
+    margin-bottom: 16px;
+    color: rgba(15, 23, 42, 0.7);
+}
+
+.contact-form__form {
+    display: grid;
+    gap: 12px;
+}
+
+.contact-form__form label {
+    font-weight: 700;
+}
+
+.contact-form__form input,
+.contact-form__form select,
+.contact-form__form textarea {
+    padding: 12px 14px;
+    border-radius: 12px;
+    border: 2px solid rgba(15, 23, 42, 0.2);
+    font-size: 16px;
+    font-family: inherit;
+}
+
+.contact-form__form input:focus,
+.contact-form__form select:focus,
+.contact-form__form textarea:focus {
+    outline: none;
+    border-color: var(--teal);
+    box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.2);
+}
+
+.captcha-block {
+    padding: 10px 0 6px;
+}
+
+.form-submit {
+    width: fit-content;
+}
+
 footer {
     text-align: center;
     padding: 24px 16px 32px;

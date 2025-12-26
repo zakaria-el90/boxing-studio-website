@@ -28,6 +28,63 @@
           <li><strong>Location:</strong> 123 Sunny Ave, Happy Town</li>
           <li><strong>Drop-ins:</strong> Please arrive 10 minutes early to get set up.</li>
         </ul>
+        <div class="contact-form">
+          <h2>Send Us a Message</h2>
+          <p class="form-note">
+            Fields marked with * are required. Replace the Formspree endpoint and reCAPTCHA site
+            key with your live credentials.
+          </p>
+          <form
+            action="https://formspree.io/f/yourformid"
+            method="POST"
+            class="contact-form__form"
+          >
+            <label for="contact-name">Name *</label>
+            <input
+              id="contact-name"
+              name="name"
+              type="text"
+              autocomplete="name"
+              required
+            />
+
+            <label for="contact-info">Phone or Email *</label>
+            <input
+              id="contact-info"
+              name="contact"
+              type="text"
+              autocomplete="tel email"
+              inputmode="text"
+              required
+              pattern="(^\\+?\\d[\\d\\s().-]{7,}$)|(^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$)"
+              title="Enter a valid phone number or email address."
+              placeholder="(555) 123-4567 or you@email.com"
+            />
+
+            <label for="contact-time">Preferred Time *</label>
+            <select id="contact-time" name="preferred_time" required>
+              <option value="" disabled selected>Select a time</option>
+              <option value="Morning">Morning</option>
+              <option value="Afternoon">Afternoon</option>
+              <option value="Evening">Evening</option>
+            </select>
+
+            <label for="contact-message">Message *</label>
+            <textarea
+              id="contact-message"
+              name="message"
+              rows="5"
+              required
+              placeholder="Tell us a little about your child and goals."
+            ></textarea>
+
+            <div class="captcha-block">
+              <div class="g-recaptcha" data-sitekey="your-site-key"></div>
+            </div>
+
+            <button type="submit" class="nav-button form-submit">Send Message</button>
+          </form>
+        </div>
       </section>
     </main>
 
@@ -41,5 +98,6 @@
     </footer>
 
     <script src="js/script.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
   </body>
 </html>
