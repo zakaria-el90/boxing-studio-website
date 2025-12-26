@@ -1,0 +1,94 @@
+.admin-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    text-align: center;
+}
+
+.admin-eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: 14px;
+    margin: 0 0 8px;
+}
+
+.admin-subtitle {
+    margin: 0;
+    font-size: 18px;
+}
+
+.admin-card {
+    display: grid;
+    gap: 16px;
+}
+
+.admin-form {
+    display: grid;
+    gap: 12px;
+}
+
+.admin-form button {
+    width: fit-content;
+}
+
+.admin-stats .stat {
+    font-size: 32px;
+    margin: 8px 0 0;
+    font-weight: 700;
+}
+
+.admin-section-header {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.admin-table-wrapper {
+    overflow-x: auto;
+}
+
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 16px;
+}
+
+.admin-table th,
+.admin-table td {
+    padding: 12px;
+    border-bottom: 2px solid var(--gray);
+    text-align: left;
+}
+
+.admin-table thead {
+    background: var(--gray);
+}
+
+.admin-logout {
+    width: auto;
+}
+
+.admin-hidden {
+    display: none;
+}
+
+.form-note[data-status] {
+    min-height: 24px;
+    margin: 0;
+    font-weight: 600;
+}
+
+@media (min-width: 700px) {
+    .admin-header {
+        flex-direction: row;
+        justify-content: space-between;
+        text-align: left;
+    }
+
+    .admin-section-header {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+}

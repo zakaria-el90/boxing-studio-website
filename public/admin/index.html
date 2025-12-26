@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard | Little Champs Boxing Club</title>
+    <link rel="stylesheet" href="../css/styles.css" />
+    <link rel="stylesheet" href="css/admin.css" />
+  </head>
+  <body data-page="admin">
+    <header class="admin-header">
+      <div>
+        <p class="admin-eyebrow">Admin Area</p>
+        <h1 class="site-title">Little Champs Boxing Club</h1>
+        <p class="admin-subtitle">Member management &amp; payments overview</p>
+      </div>
+      <button class="nav-button admin-logout" type="button" data-action="logout">
+        Log Out
+      </button>
+    </header>
+
+    <main>
+      <section class="hero admin-card" data-section="setup">
+        <h1>Connect your secure admin services</h1>
+        <p>
+          This dashboard is wired for a managed backend (authentication + database). Add your
+          Supabase project credentials in <code>public/admin/js/admin.js</code> to enable secure
+          login and data management.
+        </p>
+        <ul class="list">
+          <li><strong>Authentication:</strong> Supabase Auth (email + password).</li>
+          <li><strong>Database:</strong> <code>members</code> table with row-level security.</li>
+          <li><strong>Payments:</strong> Store status only (no card data).</li>
+        </ul>
+        <p class="form-note">
+          This page will not accept logins until valid credentials are configured.
+        </p>
+      </section>
+
+      <section class="hero admin-card" data-section="login">
+        <h1>Admin Login</h1>
+        <p>Only authorized staff should access member details.</p>
+        <form class="admin-form" data-form="login">
+          <label for="login-email">Email *</label>
+          <input
+            id="login-email"
+            type="email"
+            name="email"
+            autocomplete="username"
+            required
+          />
+
+          <label for="login-password">Password *</label>
+          <input
+            id="login-password"
+            type="password"
+            name="password"
+            autocomplete="current-password"
+            required
+          />
+
+          <button class="nav-button" type="submit">Sign In</button>
+        </form>
+        <p class="form-note" data-status="login"></p>
+      </section>
+
+      <section class="hero admin-card" data-section="dashboard">
+        <h1>Admin Dashboard</h1>
+        <p>Quick stats for memberships and payments.</p>
+        <div class="card-grid admin-stats">
+          <div class="card">
+            <h3>Total Members</h3>
+            <p class="stat" data-stat="total">0</p>
+          </div>
+          <div class="card">
+            <h3>Active Memberships</h3>
+            <p class="stat" data-stat="active">0</p>
+          </div>
+          <div class="card">
+            <h3>Payments Up to Date</h3>
+            <p class="stat" data-stat="paid">0</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="hero admin-card" data-section="members">
+        <div class="admin-section-header">
+          <div>
+            <h2>Member Directory</h2>
+            <p>Search, review, and update member status.</p>
+          </div>
+          <button class="nav-button" type="button" data-action="refresh">
+            Refresh
+          </button>
+        </div>
+        <div class="admin-table-wrapper">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Status</th>
+                <th>Plan</th>
+                <th>Payment</th>
+                <th>Last Updated</th>
+              </tr>
+            </thead>
+            <tbody data-table="members">
+              <tr>
+                <td colspan="5">No members loaded yet.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="hero admin-card" data-section="add-member">
+        <h2>Add or Update Member</h2>
+        <p>Use this form to add new members or update status fields.</p>
+        <form class="admin-form" data-form="member">
+          <label for="member-name">Full Name *</label>
+          <input id="member-name" name="full_name" type="text" required />
+
+          <label for="member-status">Membership Status *</label>
+          <select id="member-status" name="status" required>
+            <option value="Active">Active</option>
+            <option value="Paused">Paused</option>
+            <option value="Inactive">Inactive</option>
+          </select>
+
+          <label for="member-plan">Plan *</label>
+          <select id="member-plan" name="plan" required>
+            <option value="Drop-In">Drop-In</option>
+            <option value="Monthly Explorer">Monthly Explorer</option>
+            <option value="All-Star Unlimited">All-Star Unlimited</option>
+          </select>
+
+          <label for="member-payment">Payment Status *</label>
+          <select id="member-payment" name="payment_status" required>
+            <option value="Up to Date">Up to Date</option>
+            <option value="Needs Follow-up">Needs Follow-up</option>
+            <option value="Past Due">Past Due</option>
+          </select>
+
+          <button class="nav-button" type="submit">Save Member</button>
+        </form>
+        <p class="form-note" data-status="member"></p>
+      </section>
+    </main>
+
+    <footer>
+      <p>Admin access is protected by managed authentication and secure database rules.</p>
+      <div class="footer-badges">
+        <span class="badge">Role-Based Access</span>
+        <span class="badge">No Card Data</span>
+        <span class="badge">Audit Ready</span>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/admin.js"></script>
+  </body>
+</html>
