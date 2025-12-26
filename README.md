@@ -8,7 +8,7 @@ while the underlying infrastructure follows professional software engineering pr
 
 ---
 
-## 📌 Project Goals
+## Project Goals
 
 - Extremely simple user interface
 - Secure architecture
@@ -18,7 +18,7 @@ while the underlying infrastructure follows professional software engineering pr
 
 ---
 
-## 🧱 Architecture Overview
+## Architecture Overview
 
 - **Public Website:** Static (HTML, CSS, minimal JavaScript)
 - **Admin Panel:** JavaScript-based web application
@@ -28,7 +28,7 @@ while the underlying infrastructure follows professional software engineering pr
 
 ---
 
-## 🗺️ Roadmap
+## Roadmap
 
 ### Phase 1 – MVP (Public Website)
 - Static pages (Home, Training, Prices, About, Contact)
@@ -53,7 +53,7 @@ while the underlying infrastructure follows professional software engineering pr
 
 ---
 
-## 🔐 Security Principles
+## Security Principles
 
 - HTTPS enforced
 - No storage of:
@@ -65,5 +65,5 @@ while the underlying infrastructure follows professional software engineering pr
 
 ---
 
-## 📁 Repository Structure (planned)
+## Repository Structure (planned)
 
