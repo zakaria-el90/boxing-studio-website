@@ -1,11 +1,8 @@
 :root {
-    --blue: #1e3a8a;
-    --yellow: #facc15;
-    --orange: #fb923c;
-    --teal: #14b8a6;
-    --pink: #f472b6;
-    --gray: #f8fafc;
-    --dark: #0f172a;
+    --navy: #0f172a;
+    --white: #ffffff;
+    --gold: #facc15;
+    --gray: #e2e8f0;
 }
 
 * {
@@ -15,93 +12,92 @@
 body {
     margin: 0;
     font-family: "Trebuchet MS", "Segoe UI", sans-serif;
-    background: var(--gray);
-    color: var(--dark);
+    background: var(--white);
+    color: var(--navy);
+    font-size: 18px;
+    line-height: 1.7;
 }
 
 header {
-    background: var(--blue);
-    color: white;
-    padding: 24px 16px;
+    background: var(--navy);
+    color: var(--white);
+    padding: 32px 18px;
 }
 
 .site-title {
-    font-size: 32px;
+    font-size: 34px;
     font-weight: 700;
-    margin: 0 0 16px;
+    margin: 0 0 18px;
     text-align: center;
 }
 
 nav {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    justify-content: center;
+    display: grid;
+    gap: 14px;
+    justify-items: center;
 }
 
 .nav-button {
-    background: white;
-    color: var(--dark);
+    background: var(--white);
+    color: var(--navy);
     text-decoration: none;
-    padding: 14px 22px;
+    padding: 16px 24px;
     border-radius: 999px;
     font-size: 18px;
     font-weight: 700;
-    border: 3px solid transparent;
-    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
-    box-shadow: 0 4px 0 rgba(15, 23, 42, 0.2);
-}
-
-.nav-button:hover,
-.nav-button:focus {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 0 rgba(15, 23, 42, 0.25);
+    border: 3px solid var(--navy);
+    width: 100%;
+    max-width: 260px;
+    text-align: center;
 }
 
 .nav-button.is-active {
-    border-color: var(--yellow);
-    background: var(--yellow);
+    background: var(--gold);
+    border-color: var(--gold);
+    color: var(--navy);
 }
 
 main {
-    max-width: 960px;
+    max-width: 720px;
     margin: 0 auto;
-    padding: 32px 20px 48px;
+    padding: 32px 20px 56px;
+    display: grid;
+    gap: 24px;
 }
 
 .hero {
-    background: white;
-    border-radius: 24px;
+    background: var(--white);
+    border-radius: 20px;
     padding: 28px;
-    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+    border: 3px solid var(--navy);
 }
 
 .hero h1 {
-    font-size: 36px;
+    font-size: 30px;
     margin-top: 0;
+    margin-bottom: 12px;
 }
 
 .hero p {
     font-size: 18px;
-    line-height: 1.6;
+    margin: 0;
 }
 
 .card-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 16px;
-    margin-top: 24px;
 }
 
 .card {
-    background: white;
-    padding: 18px;
+    background: var(--white);
+    padding: 20px;
     border-radius: 18px;
-    border: 3px dashed var(--teal);
+    border: 2px solid var(--gray);
 }
 
 .card h3 {
     margin-top: 0;
+    font-size: 20px;
 }
 
 .list {
@@ -111,14 +107,13 @@ main {
 }
 
 .list li {
-    padding: 10px 0;
-    border-bottom: 1px solid rgba(15, 23, 42, 0.1);
+    padding: 12px 0;
+    border-bottom: 2px solid var(--gray);
 }
 
 .contact-form {
-    margin-top: 28px;
     padding-top: 20px;
-    border-top: 2px dashed rgba(15, 23, 42, 0.15);
+    border-top: 3px solid var(--navy);
 }
 
 .contact-form h2 {
@@ -127,14 +122,13 @@ main {
 }
 
 .form-note {
-    font-size: 15px;
+    font-size: 16px;
     margin-bottom: 16px;
-    color: rgba(15, 23, 42, 0.7);
 }
 
 .contact-form__form {
     display: grid;
-    gap: 12px;
+    gap: 14px;
 }
 
 .contact-form__form label {
@@ -144,9 +138,9 @@ main {
 .contact-form__form input,
 .contact-form__form select,
 .contact-form__form textarea {
-    padding: 12px 14px;
+    padding: 14px 16px;
     border-radius: 12px;
-    border: 2px solid rgba(15, 23, 42, 0.2);
+    border: 2px solid var(--navy);
     font-size: 16px;
     font-family: inherit;
 }
@@ -155,12 +149,11 @@ main {
 .contact-form__form select:focus,
 .contact-form__form textarea:focus {
     outline: none;
-    border-color: var(--teal);
-    box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.2);
+    box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.2);
 }
 
 .captcha-block {
-    padding: 10px 0 6px;
+    padding: 12px 0 6px;
 }
 
 .form-submit {
@@ -169,9 +162,9 @@ main {
 
 footer {
     text-align: center;
-    padding: 24px 16px 32px;
-    background: var(--dark);
-    color: white;
+    padding: 28px 16px 36px;
+    background: var(--navy);
+    color: var(--white);
     font-size: 16px;
 }
 
@@ -184,20 +177,60 @@ footer {
 }
 
 .badge {
-    background: var(--orange);
-    color: var(--dark);
-    padding: 6px 12px;
+    background: var(--gold);
+    color: var(--navy);
+    padding: 8px 14px;
     border-radius: 999px;
     font-weight: 700;
 }
 
-@media (max-width: 600px) {
+@media (min-width: 700px) {
+    body {
+        font-size: 19px;
+    }
+
+    header {
+        padding: 36px 24px;
+    }
+
+    nav {
+        grid-auto-flow: column;
+        justify-content: center;
+    }
+
     .nav-button {
-        width: 100%;
-        text-align: center;
+        width: auto;
+    }
+
+    main {
+        max-width: 900px;
+        gap: 28px;
     }
 
     .hero h1 {
-        font-size: 28px;
+        font-size: 36px;
+    }
+
+    .card-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (min-width: 1024px) {
+    body {
+        font-size: 20px;
+    }
+
+    main {
+        max-width: 1040px;
+        padding: 40px 24px 72px;
+    }
+
+    .card-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .hero {
+        padding: 36px;
     }
 }
