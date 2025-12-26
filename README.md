@@ -60,10 +60,19 @@ while the underlying infrastructure follows professional software engineering pr
   - ID documents
   - Credit card numbers
 - Payments handled exclusively by payment providers
+- No sensitive data stored on the platform
+- All forms submit to external providers (no form data stored in the repo)
 - Admin access protected by authentication and roles
 - Principle of least privilege
 
 ---
 
-## Repository Structure (planned)
+## Deploying the Static Site (HTTPS)
 
+This site is static and should be deployed on an HTTPS-only host.
+Recommended options include **Netlify**, **Vercel**, or **GitHub Pages** (with HTTPS enabled).
+Ensure your hosting provider enforces HTTPS for all traffic.
+
+---
+
+## Repository Structure (planned)
