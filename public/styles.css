@@ -1,0 +1,151 @@
+:root {
+  --blue: #1e3a8a;
+  --yellow: #facc15;
+  --orange: #fb923c;
+  --teal: #14b8a6;
+  --pink: #f472b6;
+  --gray: #f8fafc;
+  --dark: #0f172a;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+  background: var(--gray);
+  color: var(--dark);
+}
+
+header {
+  background: var(--blue);
+  color: white;
+  padding: 24px 16px;
+}
+
+.site-title {
+  font-size: 32px;
+  font-weight: 700;
+  margin: 0 0 16px;
+  text-align: center;
+}
+
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+}
+
+.nav-button {
+  background: white;
+  color: var(--dark);
+  text-decoration: none;
+  padding: 14px 22px;
+  border-radius: 999px;
+  font-size: 18px;
+  font-weight: 700;
+  border: 3px solid transparent;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+  box-shadow: 0 4px 0 rgba(15, 23, 42, 0.2);
+}
+
+.nav-button:hover,
+.nav-button:focus {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 0 rgba(15, 23, 42, 0.25);
+}
+
+.nav-button.is-active {
+  border-color: var(--yellow);
+  background: var(--yellow);
+}
+
+main {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 32px 20px 48px;
+}
+
+.hero {
+  background: white;
+  border-radius: 24px;
+  padding: 28px;
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+}
+
+.hero h1 {
+  font-size: 36px;
+  margin-top: 0;
+}
+
+.hero p {
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.card {
+  background: white;
+  padding: 18px;
+  border-radius: 18px;
+  border: 3px dashed var(--teal);
+}
+
+.card h3 {
+  margin-top: 0;
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 16px 0 0;
+}
+
+.list li {
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.1);
+}
+
+footer {
+  text-align: center;
+  padding: 24px 16px 32px;
+  background: var(--dark);
+  color: white;
+  font-size: 16px;
+}
+
+.footer-badges {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+
+.badge {
+  background: var(--orange);
+  color: var(--dark);
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-weight: 700;
+}
+
+@media (max-width: 600px) {
+  .nav-button {
+    width: 100%;
+    text-align: center;
+  }
+
+  .hero h1 {
+    font-size: 28px;
+  }
+}
