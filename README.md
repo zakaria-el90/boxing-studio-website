@@ -77,12 +77,12 @@ Ensure your hosting provider enforces HTTPS for all traffic.
 
 ## Admin Panel (Phase 2 Setup)
 
-The admin dashboard lives at `public/admin/index.html` and is designed to connect to
+The admin dashboard lives at `admin/index.html` and is designed to connect to
 managed services (authentication + database). To enable Phase 2:
 
 1. Create a Supabase project with a `members` table.
 2. Add row-level security so only authenticated admins can read/write.
-3. Replace the placeholder credentials in `public/admin/js/admin.js`:
+3. Replace the placeholder credentials in `admin/js/admin.js`:
    - `SUPABASE_URL`
    - `SUPABASE_ANON_KEY`
 4. Create at least one admin user in Supabase Auth.

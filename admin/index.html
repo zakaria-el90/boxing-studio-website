@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Admin Dashboard | Little Champs Boxing Club</title>
-    <link rel="stylesheet" href="../css/styles.css" />
+    <link rel="stylesheet" href="../public/css/styles.css" />
     <link rel="stylesheet" href="css/admin.css" />
   </head>
   <body data-page="admin">
@@ -24,7 +24,7 @@
         <h1>Connect your secure admin services</h1>
         <p>
           This dashboard is wired for a managed backend (authentication + database). Add your
-          Supabase project credentials in <code>public/admin/js/admin.js</code> to enable secure
+          Supabase project credentials in <code>admin/js/admin.js</code> to enable secure
           login and data management.
         </p>
         <ul class="list">
@@ -157,6 +157,6 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="js/admin.js"></script>
+    <script type="module" src="js/admin.js"></script>
   </body>
 </html>
