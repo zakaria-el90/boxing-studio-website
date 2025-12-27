@@ -90,6 +90,22 @@ managed services (authentication + database). To enable Phase 2:
 
 The admin UI only tracks payment status (e.g., “Up to Date”) and never stores card data.
 
+## Phase 2 – Admin & Members Management
+
+Phase 2 requires a Supabase project and manual setup.
+
+### Required setup steps
+1. Create a Supabase project.
+2. Enable Supabase Auth.
+3. Apply the schema and RLS policies in `db/members_schema.sql` using the Supabase SQL editor.
+4. Create an admin user in Supabase Auth.
+5. Insert the admin user into the `profiles` table with role `admin`.
+6. Create `admin/js/config.js` based on `config.example.js` and provide:
+   - Supabase project URL
+   - Supabase publishable key
+
+Without completing these steps, the admin UI will not function.
+
 ---
 
 ## Repository Structure (planned)
