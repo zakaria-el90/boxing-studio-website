@@ -102,11 +102,12 @@
                 <th>Plan</th>
                 <th>Payment</th>
                 <th>Last Updated</th>
+	            <th>Actions</th>
               </tr>
             </thead>
             <tbody data-table="members">
               <tr>
-                <td colspan="5">No members loaded yet.</td>
+                <td colspan="6">No members loaded yet.</td>
               </tr>
             </tbody>
           </table>
@@ -117,6 +118,7 @@
         <h2>Add or Update Member</h2>
         <p>Use this form to add new members or update status fields.</p>
         <form class="admin-form" data-form="member">
+	      <input id="member-id" name="id" type="hidden" />
           <label for="member-name">Full Name *</label>
           <input id="member-name" name="full_name" type="text" required />
 
