@@ -1,3 +1,4 @@
+//admin/js/views/admin-view.js
 export class AdminView {
     constructor() {
         this.setupSection = document.querySelector('[data-section="setup"]');
