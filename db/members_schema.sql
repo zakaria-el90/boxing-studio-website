@@ -12,7 +12,8 @@ create table if not exists public.members (
 );
 
 alter table public.members enable row level security;
-
+-- Create the authenticated role
+CREATE ROLE authenticated;
 -- Allow authenticated admins to read/write members.
 -- Replace this with role-based checks if you use custom claims.
 create policy "Members are readable by authenticated users"
