@@ -100,7 +100,7 @@ Phase 2 requires a Supabase project and manual setup.
 3. Apply the schema and RLS policies in `db/members_schema.sql` using the Supabase SQL editor.
 4. Create an admin user in Supabase Auth.
 5. Insert the admin user into the `profiles` table with role `admin`.
-6. Create `admin/js/config.js` based on `config.example.js` and provide:
+6. Create `admin/js/config.js` based on `config.ex.js` and provide:
    - Supabase project URL
    - Supabase publishable key
 
