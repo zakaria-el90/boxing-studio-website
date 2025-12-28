@@ -26,6 +26,48 @@ export class AdminModel {
             .order("updated_at", { ascending: false });
     }
 
+    async fetchProfile() {
+        const { data: userData, error: userError } = await this.supabase.auth.getUser();
+        if (userError) {
+            return { data: null, error: userError };
+        }
+        const userId = userData?.user?.id;
+        if (!userId) {
+            return { data: null, error: new Error("User not found.") };
+        }
+        return this.supabase
+            .from("profiles")
+            .select("role")
+            .eq("id", userId)
+            .single();
+    }
+
+    async fetchAuditLogs() {
+        return this.supabase
+            .from("audit_logs")
+            .select("id, actor_role, action, entity, metadata, created_at")
+            .order("created_at", { ascending: false })
+            .limit(50);
+    }
+
+    async logAudit({ action, entity, metadata }) {
+        const { data: userData, error: userError } = await this.supabase.auth.getUser();
+        if (userError) return { error: userError };
+        const userId = userData?.user?.id;
+        if (!userId) return { error: new Error("User not found.") };
+
+        const { data: profileData } = await this.fetchProfile();
+        const role = profileData?.role || "staff";
+
+        return this.supabase.from("audit_logs").insert({
+            actor_id: userId,
+            actor_role: role,
+            action,
+            entity,
+            metadata: metadata || {},
+        });
+    }
+
     async addMember(payload) {
         return this.supabase.from("members").insert(payload);
     }

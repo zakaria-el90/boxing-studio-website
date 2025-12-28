@@ -15,6 +15,8 @@ export class AdminController {
         this.view.bindLogin(this.handleLogin.bind(this));
         this.view.bindLogout(this.handleLogout.bind(this));
         this.view.bindRefresh(this.handleRefresh.bind(this));
+        this.view.bindExport(this.handleExport.bind(this));
+        this.view.bindAuditRefresh(this.handleAuditRefresh.bind(this));
         this.view.bindMemberSave(this.handleMemberSave.bind(this));
         this.view.bindMemberEdit(this.handleMemberEdit.bind(this));
 
@@ -24,14 +26,23 @@ export class AdminController {
     async refreshSession() {
         const { session } = await this.model.getSession();
         const isAuthenticated = Boolean(session);
+        let role = "";
+
+        if (isAuthenticated) {
+            role = await this.loadProfile();
+        }
 
         this.view.setSectionVisibility({
             isConfigured: true,
             isAuthenticated,
+            role,
         });
 
         if (isAuthenticated) {
             await this.loadMembers();
+            if (role === "admin") {
+                await this.loadAuditLogs();
+            }
         }
     }
 
@@ -43,6 +54,26 @@ export class AdminController {
         }
         this.members = data || [];
         this.view.renderMembers(this.members);
+    }
+
+    async loadProfile() {
+        const { data, error } = await this.model.fetchProfile();
+        if (error) {
+            this.view.setRole("");
+            return "";
+        }
+        const role = data?.role || "";
+        this.view.setRole(role);
+        return role;
+    }
+
+    async loadAuditLogs() {
+        const { data, error } = await this.model.fetchAuditLogs();
+        if (error) {
+            this.view.renderAuditError();
+            return;
+        }
+        this.view.renderAuditLogs(data || []);
     }
 
     async handleLogin(event) {
@@ -86,13 +117,31 @@ export class AdminController {
             return;
         }
 
+        await this.model.logAudit({
+            action: id ? "member_updated" : "member_created",
+            entity: "members",
+            metadata: {
+                member_name: memberPayload.full_name,
+                member_id: id || null,
+            },
+        });
+
         this.view.setMemberStatus("Member saved.");
         this.view.resetMemberForm(event);
         await this.loadMembers();
+        await this.loadAuditLogs();
     }
 
     async handleRefresh() {
         await this.loadMembers();
+    }
+
+    async handleAuditRefresh() {
+        await this.loadAuditLogs();
+    }
+
+    handleExport() {
+        this.view.exportMembersToCsv(this.members || []);
     }
 
     handleMemberEdit(memberId) {
