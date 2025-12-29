@@ -218,37 +218,95 @@ export class AdminView {
         };
     }
 
-    exportMembersToCsv(members) {
+    exportMembersToXlsx(members) {
         if (!members.length) return;
-        const headers = ["Full Name", "Status", "Plan", "Payment Status", "Updated At"];
-        const rows = members.map((member) => [
+        if (!window.ExcelJS) {
+            this.setMemberStatus("Excel export unavailable. Please refresh and try again.", true);
+            return;
+        }
+
+        const workbook = new ExcelJS.Workbook();
+        workbook.creator = "Little Champs Boxing Club";
+        workbook.created = new Date();
+        const worksheet = workbook.addWorksheet("Members", {
+            views: [{ state: "frozen", ySplit: 1 }],
+        });
+
+        worksheet.columns = [
+            { header: "Full Name", key: "full_name", width: 28 },
+            { header: "Status", key: "status", width: 14 },
+            { header: "Plan", key: "plan", width: 22 },
+            { header: "Payment Status", key: "payment_status", width: 18 },
+            { header: "Last Updated", key: "updated_at", width: 20 },
+        ];
+
+        const tableRows = members.map((member) => [
             member.full_name,
             member.status,
             member.plan,
             member.payment_status,
-            this.#formatDateTime(member.updated_at),
+            member.updated_at ? new Date(member.updated_at) : null,
         ]);
-        const csvContent = [headers, ...rows]
-            .map((row) =>
-                row
-                    .map((value) =>
-                        `"${String(value ?? "")
-                            .replace(/"/g, '""')
-                            .trim()}"`
-                    )
-                    .join(",")
-            )
-            .join("\n");
 
-        const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
-        const url = URL.createObjectURL(blob);
-        const link = document.createElement("a");
-        link.href = url;
-        link.download = "members-export.csv";
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
-        URL.revokeObjectURL(url);
+        worksheet.getColumn("full_name").alignment = { horizontal: "left", wrapText: false };
+        worksheet.getColumn("status").alignment = { horizontal: "center", wrapText: false };
+        worksheet.getColumn("plan").alignment = { horizontal: "left", wrapText: false };
+        worksheet.getColumn("payment_status").alignment = { horizontal: "center", wrapText: false };
+        worksheet.getColumn("updated_at").alignment = { horizontal: "left", wrapText: false };
+
+        worksheet.getColumn("updated_at").numFmt = "yyyy-mm-dd hh:mm";
+
+        const tableStartRow = 1;
+        const tableEndColumn = worksheet.columnCount;
+
+        worksheet.addTable({
+            name: "MembersTable",
+            ref: `A${tableStartRow}`,
+            headerRow: true,
+            totalsRow: false,
+            style: {
+                theme: "TableStyleLight9",
+                showRowStripes: false,
+            },
+            columns: worksheet.columns.map((column) => ({ name: column.header })),
+            rows: tableRows,
+        });
+
+        worksheet.getRow(1).font = { bold: true };
+        worksheet.getRow(1).fill = {
+            type: "pattern",
+            pattern: "solid",
+            fgColor: { argb: "FFEFF6FF" },
+        };
+
+        const tableEndRow = worksheet.rowCount;
+
+        for (let rowIndex = tableStartRow; rowIndex <= tableEndRow; rowIndex += 1) {
+            const row = worksheet.getRow(rowIndex);
+            for (let colIndex = 1; colIndex <= tableEndColumn; colIndex += 1) {
+                const cell = row.getCell(colIndex);
+                cell.border = {
+                    top: { style: "thin", color: { argb: "FFD1D5DB" } },
+                    left: { style: "thin", color: { argb: "FFD1D5DB" } },
+                    bottom: { style: "thin", color: { argb: "FFD1D5DB" } },
+                    right: { style: "thin", color: { argb: "FFD1D5DB" } },
+                };
+            }
+        }
+
+        workbook.xlsx.writeBuffer().then((buffer) => {
+            const blob = new Blob([buffer], {
+                type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement("a");
+            link.href = url;
+            link.download = "members-export.xlsx";
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+            URL.revokeObjectURL(url);
+        });
     }
 
     resetMemberForm(event) {

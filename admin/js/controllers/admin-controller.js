@@ -141,7 +141,7 @@ export class AdminController {
     }
 
     handleExport() {
-        this.view.exportMembersToCsv(this.members || []);
+        this.view.exportMembersToXlsx(this.members || []);
     }
 
     handleMemberEdit(memberId) {
