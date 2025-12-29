@@ -116,7 +116,7 @@ export class AdminView {
     renderMembers(members) {
         if (!members.length) {
             const colSpan = this.isAdmin ? 6 : 5;
-            this.memberTable.innerHTML = `<tr><td colspan="${colSpan}">No members found.</td></tr>`;
+            this.memberTable.innerHTML = `<tr><td colspan="${colSpan}">Keine Mitglieder gefunden.</td></tr>`;
             this.updateStats([]);
             return;
         }
@@ -126,7 +126,7 @@ export class AdminView {
                 const actionCell = this.isAdmin
                     ? `<td>
             <button class="nav-button admin-action" type="button" data-action="edit-member" data-member-id="${member.id}">
-              Edit
+              Bearbeiten
             </button>
           </td>`
                     : "";
@@ -149,14 +149,14 @@ export class AdminView {
     renderMembersError() {
         const colSpan = this.isAdmin ? 6 : 5;
         this.memberTable.innerHTML =
-            `<tr><td colspan="${colSpan}">Unable to load members. Check access rules.</td></tr>`;
+            `<tr><td colspan="${colSpan}">Mitglieder konnten nicht geladen werden. Zugriffsregeln prüfen.</td></tr>`;
     }
 
     updateStats(members) {
         const total = members.length;
-        const active = members.filter((member) => member.status === "Active").length;
+        const active = members.filter((member) => member.status === "Aktiv").length;
         const paid = members.filter(
-            (member) => member.payment_status === "Up to Date"
+            (member) => member.payment_status === "Aktuell"
         ).length;
 
         this.stats.total.textContent = total;
@@ -173,7 +173,7 @@ export class AdminView {
     renderAuditLogs(logs) {
         if (!this.auditTable) return;
         if (!logs.length) {
-            this.auditTable.innerHTML = '<tr><td colspan="5">No audit activity yet.</td></tr>';
+            this.auditTable.innerHTML = '<tr><td colspan="5">Noch keine Prüfaktivitäten.</td></tr>';
             return;
         }
 
@@ -195,7 +195,7 @@ export class AdminView {
     renderAuditError() {
         if (!this.auditTable) return;
         this.auditTable.innerHTML =
-            '<tr><td colspan="5">Unable to load audit logs. Check access rules.</td></tr>';
+            '<tr><td colspan="5">Prüfprotokolle konnten nicht geladen werden. Zugriffsregeln prüfen.</td></tr>';
     }
 
     getLoginFormData(event) {
@@ -221,23 +221,23 @@ export class AdminView {
     exportMembersToXlsx(members) {
         if (!members.length) return;
         if (!window.ExcelJS) {
-            this.setMemberStatus("Excel export unavailable. Please refresh and try again.", true);
+            this.setMemberStatus("Excel-Export nicht verfügbar. Bitte aktualisieren und erneut versuchen.", true);
             return;
         }
 
         const workbook = new ExcelJS.Workbook();
         workbook.creator = "Little Champs Boxing Club";
         workbook.created = new Date();
-        const worksheet = workbook.addWorksheet("Members", {
+        const worksheet = workbook.addWorksheet("Mitglieder", {
             views: [{ state: "frozen", ySplit: 1 }],
         });
 
         worksheet.columns = [
-            { header: "Full Name", key: "full_name", width: 28 },
+            { header: "Vollständiger Name", key: "full_name", width: 28 },
             { header: "Status", key: "status", width: 14 },
-            { header: "Plan", key: "plan", width: 22 },
-            { header: "Payment Status", key: "payment_status", width: 18 },
-            { header: "Last Updated", key: "updated_at", width: 20 },
+            { header: "Tarif", key: "plan", width: 22 },
+            { header: "Zahlungsstatus", key: "payment_status", width: 18 },
+            { header: "Zuletzt aktualisiert", key: "updated_at", width: 20 },
         ];
 
         const tableRows = members.map((member) => [
@@ -301,7 +301,7 @@ export class AdminView {
             const url = URL.createObjectURL(blob);
             const link = document.createElement("a");
             link.href = url;
-            link.download = "members-export.xlsx";
+            link.download = "mitglieder-export.xlsx";
             document.body.appendChild(link);
             link.click();
             link.remove();
