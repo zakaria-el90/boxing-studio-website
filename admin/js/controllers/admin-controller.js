@@ -80,7 +80,7 @@ export class AdminController {
         event.preventDefault();
 
         const { email, password } = this.view.getLoginFormData(event);
-        this.view.setLoginStatus("Signing in...");
+        this.view.setLoginStatus("Anmeldung läuft...");
 
         const { error } = await this.model.signIn(email, password);
         if (error) {
@@ -88,7 +88,7 @@ export class AdminController {
             return;
         }
 
-        this.view.setLoginStatus("Signed in successfully.");
+        this.view.setLoginStatus("Erfolgreich angemeldet.");
         await this.refreshSession();
     }
 
@@ -105,7 +105,7 @@ export class AdminController {
         event.preventDefault();
 
         const payload = this.view.getMemberFormData(event);
-        this.view.setMemberStatus("Saving member...");
+        this.view.setMemberStatus("Mitglied wird gespeichert...");
 
         const { id, ...memberPayload } = payload;
         const { error } = id
@@ -126,7 +126,7 @@ export class AdminController {
             },
         });
 
-        this.view.setMemberStatus("Member saved.");
+        this.view.setMemberStatus("Mitglied gespeichert.");
         this.view.resetMemberForm(event);
         await this.loadMembers();
         await this.loadAuditLogs();
@@ -148,7 +148,7 @@ export class AdminController {
         const member = this.members?.find((entry) => entry.id === memberId);
         if (!member) return;
         this.view.fillMemberForm(member);
-        this.view.setMemberStatus(`Editing ${member.full_name}. Update fields and save.`);
+        this.view.setMemberStatus(`Bearbeite ${member.full_name}. Felder aktualisieren und speichern.`);
     }
 }
 
