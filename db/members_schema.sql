@@ -21,7 +21,7 @@ alter table public.members
 create table public.profiles
 (
     id   uuid primary key references auth.users (id) on delete cascade,
-    role text not null check (role in ('admin'))
+    role text not null check (role in ('admin', 'staff'))
 );
 
 alter table public.profiles
@@ -35,7 +35,7 @@ create policy "Admins can read members"
     exists (select 1
             from public.profiles
             where profiles.id = auth.uid()
-              and profiles.role = 'admin')
+              and profiles.role in ('admin', 'staff'))
     );
 
 
@@ -53,6 +53,40 @@ create policy "Admins can insert members"
 create policy "Admins can update members"
     on public.members
     for update
+    using (
+    exists (select 1
+            from public.profiles
+            where profiles.id = auth.uid()
+              and profiles.role = 'admin')
+    );
+
+create table if not exists public.audit_logs
+(
+    id         uuid primary key default gen_random_uuid(),
+    actor_id   uuid             not null references auth.users (id) on delete cascade,
+    actor_role text             not null check (actor_role in ('admin', 'staff')),
+    action     text             not null,
+    entity     text             not null,
+    metadata   jsonb            not null default '{}'::jsonb,
+    created_at timestamptz      not null default now()
+);
+
+alter table public.audit_logs
+    enable row level security;
+
+create policy "Staff can insert audit logs"
+    on public.audit_logs
+    for insert
+    with check (
+    exists (select 1
+            from public.profiles
+            where profiles.id = auth.uid()
+              and profiles.role in ('admin', 'staff'))
+    );
+
+create policy "Admins can read audit logs"
+    on public.audit_logs
+    for select
     using (
     exists (select 1
             from public.profiles

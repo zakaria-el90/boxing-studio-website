@@ -44,6 +44,12 @@
     gap: 12px;
 }
 
+.admin-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
 .admin-table-wrapper {
     overflow-x: auto;
 }

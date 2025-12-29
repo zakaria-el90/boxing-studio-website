@@ -24,7 +24,7 @@
         <h1>Connect your secure admin services</h1>
         <p>
           This dashboard is wired for a managed backend (authentication + database). Add your
-          Supabase project credentials in <code>admin/js/admin.js</code> to enable secure
+          Supabase project credentials in <code>admin/js/config.js</code> to enable secure
           login and data management.
         </p>
         <ul class="list">
@@ -67,6 +67,7 @@
       <section class="hero admin-card" data-section="dashboard">
         <h1>Admin Dashboard</h1>
         <p>Quick stats for memberships and payments.</p>
+        <p class="form-note">Signed in as: <strong data-stat="role">—</strong></p>
         <div class="card-grid admin-stats">
           <div class="card">
             <h3>Total Members</h3>
@@ -89,9 +90,14 @@
             <h2>Member Directory</h2>
             <p>Search, review, and update member status.</p>
           </div>
-          <button class="nav-button" type="button" data-action="refresh">
-            Refresh
-          </button>
+          <div class="admin-actions">
+            <button class="nav-button" type="button" data-action="export">
+              Export CSV
+            </button>
+            <button class="nav-button" type="button" data-action="refresh">
+              Refresh
+            </button>
+          </div>
         </div>
         <div class="admin-table-wrapper">
           <table class="admin-table">
@@ -102,7 +108,7 @@
                 <th>Plan</th>
                 <th>Payment</th>
                 <th>Last Updated</th>
-	            <th>Actions</th>
+                <th data-column="actions">Actions</th>
               </tr>
             </thead>
             <tbody data-table="members">
@@ -146,6 +152,36 @@
           <button class="nav-button" type="submit">Save Member</button>
         </form>
         <p class="form-note" data-status="member"></p>
+      </section>
+
+      <section class="hero admin-card" data-section="audit">
+        <div class="admin-section-header">
+          <div>
+            <h2>Audit Log</h2>
+            <p>Recent administrative activity.</p>
+          </div>
+          <button class="nav-button" type="button" data-action="refresh-audit">
+            Refresh
+          </button>
+        </div>
+        <div class="admin-table-wrapper">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Time</th>
+                <th>Actor</th>
+                <th>Action</th>
+                <th>Entity</th>
+                <th>Details</th>
+              </tr>
+            </thead>
+            <tbody data-table="audit">
+              <tr>
+                <td colspan="5">No audit activity yet.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </section>
     </main>
 
