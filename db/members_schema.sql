@@ -95,4 +95,4 @@ create policy "Admins can read audit logs"
     );
 
 insert into public.profiles (id, role)
-values ('USER_ID_HERE', 'admin');
+values ('64a646d2-7476-4841-b419-f8099b15c7a9', 'admin');
