@@ -154,9 +154,9 @@ export class AdminView {
 
     updateStats(members) {
         const total = members.length;
-        const active = members.filter((member) => member.status === "Active").length;
+        const active = members.filter((member) => member.status === "Aktiv").length;
         const paid = members.filter(
-            (member) => member.payment_status === "Up to Date"
+            (member) => member.payment_status === "Aktuell"
         ).length;
 
         this.stats.total.textContent = total;
