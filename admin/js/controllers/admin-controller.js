@@ -19,6 +19,8 @@ export class AdminController {
         this.view.bindAuditRefresh(this.handleAuditRefresh.bind(this));
         this.view.bindMemberSave(this.handleMemberSave.bind(this));
         this.view.bindMemberEdit(this.handleMemberEdit.bind(this));
+        this.view.bindMemberFilters(this.handleMemberFilterChange.bind(this));
+        this.view.bindMemberFiltersReset(this.handleMemberFilterReset.bind(this));
 
         this.refreshSession();
     }
@@ -53,7 +55,7 @@ export class AdminController {
             return;
         }
         this.members = data || [];
-        this.view.renderMembers(this.members);
+        this.applyMemberFilters();
     }
 
     async loadProfile() {
@@ -149,6 +151,21 @@ export class AdminController {
         if (!member) return;
         this.view.fillMemberForm(member);
         this.view.setMemberStatus(`Bearbeite ${member.full_name}. Felder aktualisieren und speichern.`);
+    }
+
+    handleMemberFilterChange() {
+        this.applyMemberFilters();
+    }
+
+    handleMemberFilterReset() {
+        this.view.resetMemberFilters();
+        this.applyMemberFilters();
+    }
+
+    applyMemberFilters() {
+        const filteredMembers = this.view.filterMembers(this.members || []);
+        this.view.renderMembers(filteredMembers);
+        this.view.updateResultsCount(filteredMembers.length, this.members.length);
     }
 }
 
