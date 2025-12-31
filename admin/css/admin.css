@@ -1,17 +1,19 @@
 .admin-shell {
     display: flex;
     min-height: 100vh;
-    background: #f8fafc;
+    background: var(--black);
+    color: var(--white);
 }
 
 .admin-sidebar {
     width: 260px;
-    background: var(--navy);
+    background: var(--charcoal);
     color: var(--white);
     padding: 28px 20px;
     display: flex;
     flex-direction: column;
     gap: 28px;
+    border-right: 1px solid var(--border);
 }
 
 .admin-sidebar .site-title {
@@ -29,7 +31,7 @@
 .admin-sidebar-brand .admin-subtitle {
     font-size: 14px;
     margin: 0;
-    color: rgba(255, 255, 255, 0.8);
+    color: var(--muted);
 }
 
 .admin-nav {
@@ -38,8 +40,8 @@
 }
 
 .admin-nav-link {
-    background: transparent;
-    border: 1px solid transparent;
+    background: var(--elevated);
+    border: 1px solid var(--border);
     color: var(--white);
     padding: 12px 16px;
     border-radius: 12px;
@@ -51,9 +53,9 @@
 
 .admin-nav-link.is-active,
 .admin-nav-link:focus {
-    background: var(--white);
-    color: var(--navy);
-    box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2);
+    background: var(--gold);
+    color: var(--black);
+    box-shadow: 0 12px 24px rgba(11, 11, 13, 0.35);
 }
 
 .admin-sidebar-footer {
@@ -65,7 +67,7 @@
 .admin-role {
     margin: 0;
     font-size: 14px;
-    color: rgba(255, 255, 255, 0.8);
+    color: var(--muted);
 }
 
 .admin-content {
@@ -75,9 +77,9 @@
 }
 
 .admin-topbar {
-    background: var(--white);
+    background: var(--black);
     padding: 24px 32px 12px;
-    border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+    border-bottom: 1px solid var(--border);
 }
 
 .admin-content .nav-button {
@@ -98,13 +100,13 @@
     letter-spacing: 0.12em;
     font-size: 12px;
     margin: 0;
-    color: rgba(15, 23, 42, 0.6);
+    color: var(--gold-bright);
 }
 
 .admin-subtitle {
     margin: 0;
     font-size: 16px;
-    color: rgba(15, 23, 42, 0.7);
+    color: var(--muted);
 }
 
 .admin-main {
@@ -119,8 +121,9 @@
 .admin-card {
     display: grid;
     gap: 16px;
-    box-shadow: 0 16px 40px rgba(15, 23, 42, 0.08);
-    border-color: rgba(15, 23, 42, 0.08);
+    background: var(--charcoal);
+    border: 1px solid var(--border);
+    box-shadow: 0 16px 40px rgba(11, 11, 13, 0.35);
 }
 
 .admin-auth {
@@ -145,7 +148,7 @@
 
 .admin-summary {
     font-size: 14px;
-    color: rgba(15, 23, 42, 0.6);
+    color: var(--muted);
 }
 
 .admin-form {
@@ -179,22 +182,25 @@
 }
 
 .admin-field span {
-    color: rgba(15, 23, 42, 0.7);
+    color: var(--muted);
 }
 
 .admin-field input,
 .admin-field select {
     padding: 12px 14px;
     border-radius: 12px;
-    border: 2px solid var(--navy);
+    border: 1px solid var(--border);
     font-size: 16px;
     font-family: inherit;
+    background: var(--black);
+    color: var(--white);
 }
 
 .admin-field input:focus,
 .admin-field select:focus {
     outline: none;
-    box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.2);
+    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.3);
+    border-color: var(--gold);
 }
 
 .admin-reset {
@@ -205,7 +211,7 @@
 .admin-results {
     margin: 0;
     font-weight: 600;
-    color: rgba(15, 23, 42, 0.7);
+    color: var(--muted);
 }
 
 .admin-actions {
@@ -224,22 +230,24 @@
     font-size: 16px;
     border-radius: 16px;
     overflow: hidden;
-    background: var(--white);
+    background: var(--charcoal);
+    border: 1px solid var(--border);
 }
 
 .admin-table th,
 .admin-table td {
     padding: 12px;
-    border-bottom: 2px solid var(--gray);
+    border-bottom: 1px solid var(--border);
     text-align: left;
 }
 
 .admin-table thead {
-    background: var(--gray);
+    background: var(--elevated);
+    color: var(--white);
 }
 
 .admin-table tbody tr:nth-child(even) {
-    background: rgba(226, 232, 240, 0.4);
+    background: rgba(31, 35, 41, 0.55);
 }
 
 .admin-logout {
@@ -251,10 +259,10 @@
 }
 
 .admin-empty {
-    border: 2px dashed rgba(15, 23, 42, 0.2);
+    border: 1px dashed var(--border);
     border-radius: 16px;
     padding: 28px;
-    background: #f1f5f9;
+    background: var(--elevated);
 }
 
 .admin-empty h3 {
@@ -273,19 +281,20 @@
 .admin-modal-overlay {
     position: absolute;
     inset: 0;
-    background: rgba(15, 23, 42, 0.6);
+    background: rgba(11, 11, 13, 0.7);
 }
 
 .admin-modal-card {
     position: relative;
-    background: var(--white);
+    background: var(--charcoal);
     border-radius: 20px;
     padding: 24px;
     width: min(560px, 92vw);
     max-height: 90vh;
     overflow-y: auto;
     z-index: 1;
-    box-shadow: 0 24px 60px rgba(15, 23, 42, 0.2);
+    box-shadow: 0 24px 60px rgba(11, 11, 13, 0.5);
+    border: 1px solid var(--border);
 }
 
 .admin-modal-header {
@@ -300,7 +309,7 @@
     border: none;
     font-size: 20px;
     cursor: pointer;
-    color: var(--navy);
+    color: var(--white);
 }
 
 .admin-modal-actions {
@@ -312,7 +321,7 @@
 
 .admin-ghost {
     background: transparent;
-    border-color: rgba(15, 23, 42, 0.3);
+    border-color: var(--border);
 }
 
 .form-note[data-status] {
