@@ -8,6 +8,13 @@
     margin: 0 auto;
 }
 
+.admin-header-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+}
+
 .admin-eyebrow {
     text-transform: uppercase;
     letter-spacing: 0.12em;
@@ -138,6 +145,19 @@
     display: none;
 }
 
+.admin-sidebar {
+    align-content: start;
+}
+
+.admin-sidebar--collapsed {
+    display: none;
+}
+
+.admin-sidebar .admin-table-wrapper {
+    max-height: 360px;
+    overflow-y: auto;
+}
+
 .form-note[data-status] {
     min-height: 24px;
     margin: 0;
@@ -174,5 +194,11 @@
 
     .admin-filters {
         grid-template-columns: minmax(0, 1.4fr) repeat(2, minmax(0, 1fr)) auto;
+    }
+
+    .admin-sidebar {
+        grid-column: 2;
+        position: sticky;
+        top: 24px;
     }
 }

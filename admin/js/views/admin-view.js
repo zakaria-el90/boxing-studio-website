@@ -6,7 +6,9 @@ export class AdminView {
         this.dashboardSection = document.querySelector('[data-section="dashboard"]');
         this.membersSection = document.querySelector('[data-section="members"]');
         this.addMemberSection = document.querySelector('[data-section="add-member"]');
+        this.auditSidebar = document.querySelector('[data-section="audit"]');
         this.logoutButton = document.querySelector('[data-action="logout"]');
+        this.auditToggleButtons = document.querySelectorAll('[data-action="toggle-audit"]');
         this.refreshButton = document.querySelector('[data-action="refresh"]');
         this.exportButton = document.querySelector('[data-action="export"]');
         this.auditRefreshButton = document.querySelector('[data-action="refresh-audit"]');
@@ -19,8 +21,10 @@ export class AdminView {
         this.searchInput = document.querySelector('[data-filter="search"]');
         this.statusFilter = document.querySelector('[data-filter="status"]');
         this.paymentFilter = document.querySelector('[data-filter="payment"]');
+        this.auditSearchInput = document.querySelector('[data-filter="audit-search"]');
         this.resetFiltersButton = document.querySelector('[data-action="reset-filters"]');
         this.resultsNote = document.querySelector('[data-results="members"]');
+        this.auditResultsNote = document.querySelector('[data-results="audit"]');
         this.memberIdInput = document.querySelector("#member-id");
         this.actionsHeader = document.querySelector('[data-column="actions"]');
         this.stats = {
@@ -42,6 +46,13 @@ export class AdminView {
         if (this.logoutButton) {
             this.logoutButton.addEventListener("click", handler);
         }
+    }
+
+    bindAuditToggle(handler) {
+        if (!this.auditToggleButtons) return;
+        this.auditToggleButtons.forEach((button) => {
+            button.addEventListener("click", handler);
+        });
     }
 
     bindRefresh(handler) {
@@ -80,6 +91,12 @@ export class AdminView {
         }
     }
 
+    bindAuditSearch(handler) {
+        if (this.auditSearchInput) {
+            this.auditSearchInput.addEventListener("input", handler);
+        }
+    }
+
     bindMemberFiltersReset(handler) {
         if (this.resetFiltersButton) {
             this.resetFiltersButton.addEventListener("click", handler);
@@ -109,16 +126,22 @@ export class AdminView {
             !isAuthenticated || !this.isAdmin
         );
         this.logoutButton.classList.toggle("admin-hidden", !isAuthenticated);
+        if (this.auditToggleButtons) {
+            this.auditToggleButtons.forEach((button) => {
+                button.classList.toggle("admin-hidden", !isAuthenticated || !this.isAdmin);
+            });
+        }
         if (this.exportButton) {
             this.exportButton.classList.toggle("admin-hidden", !this.isAdmin);
         }
         if (this.actionsHeader) {
             this.actionsHeader.classList.toggle("admin-hidden", !this.isAdmin);
         }
-        if (this.auditTable) {
-            this.auditTable
-                .closest('[data-section="audit"]')
-                .classList.toggle("admin-hidden", !isAuthenticated || !this.isAdmin);
+        if (this.auditSidebar) {
+            this.auditSidebar.classList.toggle(
+                "admin-hidden",
+                !isAuthenticated || !this.isAdmin
+            );
         }
     }
 
@@ -175,6 +198,29 @@ export class AdminView {
         });
     }
 
+    getAuditQuery() {
+        return this.auditSearchInput ? this.auditSearchInput.value.trim() : "";
+    }
+
+    filterAuditLogs(logs) {
+        const query = this.getAuditQuery().toLowerCase();
+        const normalize = (value) => (value || "").toString().toLowerCase();
+        if (!query) return logs;
+
+        return logs.filter((entry) => {
+            const searchable = [
+                entry.created_at,
+                entry.actor_role,
+                entry.action,
+                entry.entity,
+                this.#formatMetadata(entry.metadata),
+            ]
+                .map((value) => normalize(value))
+                .join(" ");
+            return searchable.includes(query);
+        });
+    }
+
     updateResultsCount(filteredCount, totalCount) {
         if (!this.resultsNote) return;
         if (totalCount === 0) {
@@ -186,6 +232,19 @@ export class AdminView {
             return;
         }
         this.resultsNote.textContent = `Zeige ${filteredCount} von ${totalCount} Mitgliedern.`;
+    }
+
+    updateAuditResultsCount(filteredCount, totalCount) {
+        if (!this.auditResultsNote) return;
+        if (totalCount === 0) {
+            this.auditResultsNote.textContent = "Keine Prüfaktivitäten vorhanden.";
+            return;
+        }
+        if (filteredCount === totalCount) {
+            this.auditResultsNote.textContent = `Zeige ${totalCount} Einträge.`;
+            return;
+        }
+        this.auditResultsNote.textContent = `Zeige ${filteredCount} von ${totalCount} Einträgen.`;
     }
 
     renderMembers(members) {
@@ -271,6 +330,11 @@ export class AdminView {
         if (!this.auditTable) return;
         this.auditTable.innerHTML =
             '<tr><td colspan="5">Prüfprotokolle konnten nicht geladen werden. Zugriffsregeln prüfen.</td></tr>';
+    }
+
+    setAuditSidebarOpen(isOpen) {
+        if (!this.auditSidebar) return;
+        this.auditSidebar.classList.toggle("admin-sidebar--collapsed", !isOpen);
     }
 
     getLoginFormData(event) {
