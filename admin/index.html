@@ -8,167 +8,263 @@
     <link rel="stylesheet" href="css/admin.css" />
   </head>
   <body data-page="admin">
-    <header class="admin-header">
-      <div>
-        <p class="admin-eyebrow">Adminbereich</p>
-        <h1 class="site-title">Little Champs Boxing Club</h1>
-        <p class="admin-subtitle">Mitgliederverwaltung &amp; Zahlungsübersicht</p>
-      </div>
-      <div class="admin-header-actions">
-        <button
-          class="nav-button admin-toggle-audit admin-hidden"
-          type="button"
-          data-action="toggle-audit"
-        >
-          Prüfprotokoll
-        </button>
-        <button class="nav-button admin-logout" type="button" data-action="logout">
-          Abmelden
-        </button>
-      </div>
-    </header>
-
-    <main class="admin-main">
-      <section class="hero admin-card admin-card--span-2" data-section="setup">
-        <h1>Verbinden Sie Ihre sicheren Admin-Dienste</h1>
-        <p>
-          Dieses Dashboard ist für ein verwaltetes Backend (Authentifizierung + Datenbank)
-          vorbereitet. Fügen Sie Ihre Supabase-Projektzugangsdaten in
-          <code>admin/js/config.js</code> ein, um sichere Anmeldung und Datenverwaltung zu
-          aktivieren.
-        </p>
-        <ul class="list">
-          <li><strong>Authentifizierung:</strong> Supabase Auth (E-Mail + Passwort).</li>
-          <li><strong>Datenbank:</strong> <code>members</code>-Tabelle mit Row-Level-Security.</li>
-          <li><strong>Zahlungen:</strong> Nur Status speichern (keine Kartendaten).</li>
-        </ul>
-        <p class="form-note">
-          Diese Seite akzeptiert keine Anmeldungen, bis gültige Zugangsdaten konfiguriert sind.
-        </p>
-      </section>
-
-      <section class="hero admin-card admin-card--span-2" data-section="login">
-        <h1>Admin-Anmeldung</h1>
-        <p>Nur autorisiertes Personal sollte auf Mitgliederdetails zugreifen.</p>
-        <form class="admin-form" data-form="login">
-          <label for="login-email">E-Mail *</label>
-          <input
-            id="login-email"
-            type="email"
-            name="email"
-            autocomplete="username"
-            required
-          />
-
-          <label for="login-password">Passwort *</label>
-          <input
-            id="login-password"
-            type="password"
-            name="password"
-            autocomplete="current-password"
-            required
-          />
-
-          <button class="nav-button" type="submit">Anmelden</button>
-        </form>
-        <p class="form-note" data-status="login"></p>
-      </section>
-
-      <section class="hero admin-card" data-section="dashboard">
-        <h1>Admin-Dashboard</h1>
-        <p>Schnelle Kennzahlen zu Mitgliedschaften und Zahlungen.</p>
-        <p class="form-note">Angemeldet als: <strong data-stat="role">—</strong></p>
-        <div class="card-grid admin-stats">
-          <div class="card">
-            <h3>Mitglieder gesamt</h3>
-            <p class="stat" data-stat="total">0</p>
-          </div>
-          <div class="card">
-            <h3>Aktive Mitgliedschaften</h3>
-            <p class="stat" data-stat="active">0</p>
-          </div>
-          <div class="card">
-            <h3>Zahlungen aktuell</h3>
-            <p class="stat" data-stat="paid">0</p>
-          </div>
+    <div class="admin-shell">
+      <aside class="admin-sidebar" data-layout="sidebar">
+        <div class="admin-sidebar-brand">
+          <p class="admin-eyebrow">Adminbereich</p>
+          <h1 class="site-title">Little Champs Boxing Club</h1>
+          <p class="admin-subtitle">Mitgliederverwaltung &amp; Zahlungsübersicht</p>
         </div>
-      </section>
-
-      <section class="hero admin-card admin-card--span-2" data-section="members">
-        <div class="admin-section-header">
-          <div>
-            <h2>Mitgliederverzeichnis</h2>
-            <p>Mitgliedsstatus suchen, prüfen und aktualisieren.</p>
-          </div>
-          <div class="admin-actions">
-            <button class="nav-button" type="button" data-action="export">
-              Excel exportieren
-            </button>
-            <button class="nav-button" type="button" data-action="refresh">
-              Aktualisieren
-            </button>
-          </div>
-        </div>
-        <div class="admin-filters" aria-label="Mitgliederfilter">
-          <label class="admin-field" for="member-search">
-            <span>Schnellsuche</span>
-            <input
-              id="member-search"
-              type="search"
-              placeholder="Name, Status, Tarif..."
-              autocomplete="off"
-              data-filter="search"
-            />
-          </label>
-          <label class="admin-field" for="filter-status">
-            <span>Status</span>
-            <select id="filter-status" data-filter="status">
-              <option value="all">Alle</option>
-              <option value="Active">Aktiv</option>
-              <option value="Paused">Pausiert</option>
-              <option value="Inactive">Inaktiv</option>
-            </select>
-          </label>
-          <label class="admin-field" for="filter-payment">
-            <span>Zahlung</span>
-            <select id="filter-payment" data-filter="payment">
-              <option value="all">Alle</option>
-              <option value="Up to Date">Aktuell</option>
-              <option value="Needs Follow-up">Nachfassen nötig</option>
-              <option value="Past Due">Überfällig</option>
-            </select>
-          </label>
-          <button class="nav-button admin-reset" type="button" data-action="reset-filters">
-            Filter zurücksetzen
+        <nav class="admin-nav" aria-label="Admin Navigation">
+          <button class="admin-nav-link is-active" type="button" data-nav="dashboard">
+            Dashboard
+          </button>
+          <button class="admin-nav-link" type="button" data-nav="members">
+            Mitglieder
+          </button>
+          <button class="admin-nav-link" type="button" data-nav="audit">
+            Audit Log
+          </button>
+        </nav>
+        <div class="admin-sidebar-footer">
+          <p class="admin-role">Angemeldet als <strong data-stat="role">—</strong></p>
+          <button class="nav-button admin-logout" type="button" data-action="logout">
+            Abmelden
           </button>
         </div>
-        <p class="admin-results" data-results="members">Zeige 0 Mitglieder.</p>
-        <div class="admin-table-wrapper">
-          <table class="admin-table">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Status</th>
-                <th>Tarif</th>
-                <th>Zahlung</th>
-                <th>Zuletzt aktualisiert</th>
-                <th data-column="actions">Aktionen</th>
-              </tr>
-            </thead>
-            <tbody data-table="members">
-              <tr>
-                <td colspan="6">Noch keine Mitglieder geladen.</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
+      </aside>
 
-      <section class="hero admin-card" data-section="add-member">
-        <h2>Mitglied hinzufügen oder aktualisieren</h2>
-        <p>Verwenden Sie dieses Formular, um neue Mitglieder hinzuzufügen oder Statusfelder zu aktualisieren.</p>
+      <div class="admin-content">
+        <header class="admin-topbar">
+          <div>
+            <p class="admin-eyebrow">Admin Dashboard</p>
+            <h2 class="admin-page-title" data-page-title>Dashboard</h2>
+            <p class="admin-subtitle">
+              Übersichtliche Verwaltung für Mitglieder, Zahlungen und Aktivitäten.
+            </p>
+          </div>
+        </header>
+
+        <main class="admin-main">
+          <section class="hero admin-card admin-auth" data-section="setup">
+            <h1>Verbinden Sie Ihre sicheren Admin-Dienste</h1>
+            <p>
+              Dieses Dashboard ist für ein verwaltetes Backend (Authentifizierung +
+              Datenbank) vorbereitet. Fügen Sie Ihre Supabase-Projektzugangsdaten in
+              <code>admin/js/config.js</code> ein, um sichere Anmeldung und
+              Datenverwaltung zu aktivieren.
+            </p>
+            <ul class="list">
+              <li><strong>Authentifizierung:</strong> Supabase Auth (E-Mail + Passwort).</li>
+              <li><strong>Datenbank:</strong> <code>members</code>-Tabelle mit Row-Level-Security.</li>
+              <li><strong>Zahlungen:</strong> Nur Status speichern (keine Kartendaten).</li>
+            </ul>
+            <p class="form-note">
+              Diese Seite akzeptiert keine Anmeldungen, bis gültige Zugangsdaten
+              konfiguriert sind.
+            </p>
+          </section>
+
+          <section class="hero admin-card admin-auth" data-section="login">
+            <h1>Admin-Anmeldung</h1>
+            <p>Nur autorisiertes Personal sollte auf Mitgliederdetails zugreifen.</p>
+            <form class="admin-form" data-form="login">
+              <label for="login-email">E-Mail *</label>
+              <input
+                id="login-email"
+                type="email"
+                name="email"
+                autocomplete="username"
+                required
+              />
+
+              <label for="login-password">Passwort *</label>
+              <input
+                id="login-password"
+                type="password"
+                name="password"
+                autocomplete="current-password"
+                required
+              />
+
+              <button class="nav-button" type="submit">Anmelden</button>
+            </form>
+            <p class="form-note" data-status="login"></p>
+          </section>
+
+          <section class="admin-page" data-page-section="dashboard">
+            <div class="admin-page-header">
+              <div>
+                <h2>Dashboard</h2>
+                <p>Die wichtigsten Kennzahlen auf einen Blick.</p>
+              </div>
+              <div class="admin-summary">
+                <p>Aktualisiert in Echtzeit nach Anmeldung.</p>
+              </div>
+            </div>
+            <div class="card-grid admin-stats">
+              <div class="card">
+                <h3>Mitglieder gesamt</h3>
+                <p class="stat" data-stat="total">0</p>
+              </div>
+              <div class="card">
+                <h3>Aktive Mitgliedschaften</h3>
+                <p class="stat" data-stat="active">0</p>
+              </div>
+              <div class="card">
+                <h3>Zahlungen aktuell</h3>
+                <p class="stat" data-stat="paid">0</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="admin-page" data-page-section="members">
+            <div class="admin-page-header">
+              <div>
+                <h2>Mitgliederverzeichnis</h2>
+                <p>Mitgliedsstatus suchen, prüfen und aktualisieren.</p>
+              </div>
+              <div class="admin-actions">
+                <button class="nav-button" type="button" data-action="open-member-modal">
+                  Mitglied hinzufügen
+                </button>
+                <button class="nav-button" type="button" data-action="export">
+                  Excel exportieren
+                </button>
+                <button class="nav-button" type="button" data-action="refresh">
+                  Aktualisieren
+                </button>
+              </div>
+            </div>
+            <div class="admin-filters" aria-label="Mitgliederfilter">
+              <label class="admin-field" for="member-search">
+                <span>Schnellsuche</span>
+                <input
+                  id="member-search"
+                  type="search"
+                  placeholder="Name, Status, Tarif..."
+                  autocomplete="off"
+                  data-filter="search"
+                />
+              </label>
+              <label class="admin-field" for="filter-status">
+                <span>Status</span>
+                <select id="filter-status" data-filter="status">
+                  <option value="all">Alle</option>
+                  <option value="Active">Aktiv</option>
+                  <option value="Paused">Pausiert</option>
+                  <option value="Inactive">Inaktiv</option>
+                </select>
+              </label>
+              <label class="admin-field" for="filter-payment">
+                <span>Zahlung</span>
+                <select id="filter-payment" data-filter="payment">
+                  <option value="all">Alle</option>
+                  <option value="Up to Date">Aktuell</option>
+                  <option value="Needs Follow-up">Nachfassen nötig</option>
+                  <option value="Past Due">Überfällig</option>
+                </select>
+              </label>
+              <button class="nav-button admin-reset" type="button" data-action="reset-filters">
+                Filter zurücksetzen
+              </button>
+            </div>
+            <p class="admin-results" data-results="members">Zeige 0 Mitglieder.</p>
+            <div class="admin-empty" data-empty="members">
+              <h3>Noch keine Mitglieder</h3>
+              <p>
+                Sobald Mitglieder erfasst sind, erscheinen sie hier. Nutzen Sie
+                „Mitglied hinzufügen“, um zu starten.
+              </p>
+            </div>
+            <div class="admin-table-wrapper" data-table-wrapper="members">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Status</th>
+                    <th>Tarif</th>
+                    <th>Zahlung</th>
+                    <th>Zuletzt aktualisiert</th>
+                    <th data-column="actions">Aktionen</th>
+                  </tr>
+                </thead>
+                <tbody data-table="members">
+                  <tr>
+                    <td colspan="6">Noch keine Mitglieder geladen.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section class="admin-page" data-page-section="audit">
+            <div class="admin-page-header">
+              <div>
+                <h2>Audit Log</h2>
+                <p>Aktuelle administrative Aktivitäten in chronologischer Reihenfolge.</p>
+              </div>
+              <div class="admin-actions">
+                <button class="nav-button" type="button" data-action="refresh-audit">
+                  Aktualisieren
+                </button>
+              </div>
+            </div>
+            <label class="admin-field" for="audit-search">
+              <span>Schnellsuche</span>
+              <input
+                id="audit-search"
+                type="search"
+                placeholder="Akteur, Aktion, Details..."
+                autocomplete="off"
+                data-filter="audit-search"
+              />
+            </label>
+            <p class="admin-results" data-results="audit">Zeige 0 Einträge.</p>
+            <div class="admin-empty" data-empty="audit">
+              <h3>Kein Prüfprotokoll verfügbar</h3>
+              <p>Hier erscheinen Aktivitäten, sobald administrative Aktionen durchgeführt werden.</p>
+            </div>
+            <div class="admin-table-wrapper" data-table-wrapper="audit">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>Zeit</th>
+                    <th>Akteur</th>
+                    <th>Aktion</th>
+                    <th>Entität</th>
+                    <th>Details</th>
+                  </tr>
+                </thead>
+                <tbody data-table="audit">
+                  <tr>
+                    <td colspan="5">Noch keine Prüfaktivitäten.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <div class="admin-modal admin-hidden" data-modal="member" aria-modal="true" role="dialog">
+      <div class="admin-modal-overlay" data-action="close-member-modal"></div>
+      <div class="admin-modal-card">
+        <div class="admin-modal-header">
+          <div>
+            <p class="admin-eyebrow">Mitglieder</p>
+            <h2 data-member-modal-title>Mitglied hinzufügen</h2>
+            <p class="admin-subtitle">
+              Neue Mitglieder anlegen oder vorhandene Daten aktualisieren.
+            </p>
+          </div>
+          <button class="admin-modal-close" type="button" data-action="close-member-modal">
+            ✕
+          </button>
+        </div>
         <form class="admin-form" data-form="member">
-	      <input id="member-id" name="id" type="hidden" />
+          <input id="member-id" name="id" type="hidden" />
           <label for="member-name">Vollständiger Name *</label>
           <input id="member-name" name="full_name" type="text" required />
 
@@ -193,60 +289,26 @@
             <option value="Past Due">Überfällig</option>
           </select>
 
-          <button class="nav-button" type="submit">Mitglied speichern</button>
+          <div class="admin-modal-actions">
+            <button class="nav-button" type="submit">Mitglied speichern</button>
+            <button
+              class="nav-button admin-ghost"
+              type="button"
+              data-action="close-member-modal"
+            >
+              Abbrechen
+            </button>
+          </div>
         </form>
         <p class="form-note" data-status="member"></p>
-      </section>
-
-      <aside class="hero admin-card admin-sidebar admin-sidebar--collapsed" data-section="audit">
-        <div class="admin-section-header">
-          <div>
-            <h2>Prüfprotokoll</h2>
-            <p>Aktuelle administrative Aktivitäten.</p>
-          </div>
-          <div class="admin-actions">
-            <button class="nav-button" type="button" data-action="refresh-audit">
-              Aktualisieren
-            </button>
-            <button class="nav-button admin-toggle-audit" type="button" data-action="toggle-audit">
-              Schließen
-            </button>
-          </div>
-        </div>
-        <label class="admin-field" for="audit-search">
-          <span>Schnellsuche</span>
-          <input
-            id="audit-search"
-            type="search"
-            placeholder="Akteur, Aktion, Details..."
-            autocomplete="off"
-            data-filter="audit-search"
-          />
-        </label>
-        <p class="admin-results" data-results="audit">Zeige 0 Einträge.</p>
-        <div class="admin-table-wrapper">
-          <table class="admin-table">
-            <thead>
-              <tr>
-                <th>Zeit</th>
-                <th>Akteur</th>
-                <th>Aktion</th>
-                <th>Entität</th>
-                <th>Details</th>
-              </tr>
-            </thead>
-            <tbody data-table="audit">
-              <tr>
-                <td colspan="5">Noch keine Prüfaktivitäten.</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </aside>
-    </main>
+      </div>
+    </div>
 
     <footer>
-      <p>Der Adminzugriff ist durch verwaltete Authentifizierung und sichere Datenbankregeln geschützt.</p>
+      <p>
+        Der Adminzugriff ist durch verwaltete Authentifizierung und sichere Datenbankregeln
+        geschützt.
+      </p>
       <div class="footer-badges">
         <span class="badge">Rollenbasierter Zugriff</span>
         <span class="badge">Keine Kartendaten</span>

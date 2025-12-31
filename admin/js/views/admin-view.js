@@ -3,12 +3,15 @@ export class AdminView {
     constructor() {
         this.setupSection = document.querySelector('[data-section="setup"]');
         this.loginSection = document.querySelector('[data-section="login"]');
-        this.dashboardSection = document.querySelector('[data-section="dashboard"]');
-        this.membersSection = document.querySelector('[data-section="members"]');
-        this.addMemberSection = document.querySelector('[data-section="add-member"]');
-        this.auditSidebar = document.querySelector('[data-section="audit"]');
+        this.dashboardSection = document.querySelector('[data-page-section="dashboard"]');
+        this.membersSection = document.querySelector('[data-page-section="members"]');
+        this.auditSection = document.querySelector('[data-page-section="audit"]');
+        this.pageSections = document.querySelectorAll('[data-page-section]');
+        this.pageTitle = document.querySelector("[data-page-title]");
+        this.sidebar = document.querySelector('[data-layout="sidebar"]');
+        this.topbar = document.querySelector(".admin-topbar");
+        this.navLinks = document.querySelectorAll("[data-nav]");
         this.logoutButton = document.querySelector('[data-action="logout"]');
-        this.auditToggleButtons = document.querySelectorAll('[data-action="toggle-audit"]');
         this.refreshButton = document.querySelector('[data-action="refresh"]');
         this.exportButton = document.querySelector('[data-action="export"]');
         this.auditRefreshButton = document.querySelector('[data-action="refresh-audit"]');
@@ -27,6 +30,14 @@ export class AdminView {
         this.auditResultsNote = document.querySelector('[data-results="audit"]');
         this.memberIdInput = document.querySelector("#member-id");
         this.actionsHeader = document.querySelector('[data-column="actions"]');
+        this.memberModal = document.querySelector('[data-modal="member"]');
+        this.memberModalTitle = document.querySelector("[data-member-modal-title]");
+        this.memberModalTriggers = document.querySelectorAll('[data-action="open-member-modal"]');
+        this.memberModalCloseButtons = document.querySelectorAll('[data-action="close-member-modal"]');
+        this.memberEmptyState = document.querySelector('[data-empty="members"]');
+        this.auditEmptyState = document.querySelector('[data-empty="audit"]');
+        this.memberTableWrapper = document.querySelector('[data-table-wrapper="members"]');
+        this.auditTableWrapper = document.querySelector('[data-table-wrapper="audit"]');
         this.stats = {
             total: document.querySelector('[data-stat="total"]'),
             active: document.querySelector('[data-stat="active"]'),
@@ -46,13 +57,6 @@ export class AdminView {
         if (this.logoutButton) {
             this.logoutButton.addEventListener("click", handler);
         }
-    }
-
-    bindAuditToggle(handler) {
-        if (!this.auditToggleButtons) return;
-        this.auditToggleButtons.forEach((button) => {
-            button.addEventListener("click", handler);
-        });
     }
 
     bindRefresh(handler) {
@@ -112,6 +116,27 @@ export class AdminView {
         });
     }
 
+    bindNavigation(handler) {
+        if (!this.navLinks) return;
+        this.navLinks.forEach((link) => {
+            link.addEventListener("click", () => handler(link.dataset.nav));
+        });
+    }
+
+    bindMemberModalOpen(handler) {
+        if (!this.memberModalTriggers) return;
+        this.memberModalTriggers.forEach((button) => {
+            button.addEventListener("click", handler);
+        });
+    }
+
+    bindMemberModalClose(handler) {
+        if (!this.memberModalCloseButtons) return;
+        this.memberModalCloseButtons.forEach((button) => {
+            button.addEventListener("click", handler);
+        });
+    }
+
     setSectionVisibility({ isConfigured, isAuthenticated, role }) {
         this.isAdmin = role === "admin";
         this.setupSection.classList.toggle("admin-hidden", isConfigured);
@@ -119,17 +144,15 @@ export class AdminView {
             "admin-hidden",
             !isConfigured || isAuthenticated
         );
-        this.dashboardSection.classList.toggle("admin-hidden", !isAuthenticated);
-        this.membersSection.classList.toggle("admin-hidden", !isAuthenticated);
-        this.addMemberSection.classList.toggle(
-            "admin-hidden",
-            !isAuthenticated || !this.isAdmin
-        );
+        this.pageSections.forEach((section) => {
+            section.classList.toggle("admin-hidden", !isAuthenticated);
+        });
         this.logoutButton.classList.toggle("admin-hidden", !isAuthenticated);
-        if (this.auditToggleButtons) {
-            this.auditToggleButtons.forEach((button) => {
-                button.classList.toggle("admin-hidden", !isAuthenticated || !this.isAdmin);
-            });
+        if (this.sidebar) {
+            this.sidebar.classList.toggle("admin-hidden", !isAuthenticated);
+        }
+        if (this.topbar) {
+            this.topbar.classList.toggle("admin-hidden", !isAuthenticated);
         }
         if (this.exportButton) {
             this.exportButton.classList.toggle("admin-hidden", !this.isAdmin);
@@ -137,11 +160,20 @@ export class AdminView {
         if (this.actionsHeader) {
             this.actionsHeader.classList.toggle("admin-hidden", !this.isAdmin);
         }
-        if (this.auditSidebar) {
-            this.auditSidebar.classList.toggle(
-                "admin-hidden",
-                !isAuthenticated || !this.isAdmin
-            );
+        if (this.memberModalTriggers) {
+            this.memberModalTriggers.forEach((button) => {
+                button.classList.toggle("admin-hidden", !this.isAdmin);
+            });
+        }
+        if (this.auditSection) {
+            this.auditSection.classList.toggle("admin-hidden", !this.isAdmin);
+        }
+        if (this.navLinks) {
+            this.navLinks.forEach((link) => {
+                if (link.dataset.nav === "audit") {
+                    link.classList.toggle("admin-hidden", !this.isAdmin);
+                }
+            });
         }
     }
 
@@ -156,6 +188,61 @@ export class AdminView {
     clearLoginStatus() {
         if (this.loginStatus) {
             this.loginStatus.textContent = "";
+        }
+    }
+
+    clearMemberStatus() {
+        if (this.memberStatus) {
+            this.memberStatus.textContent = "";
+            this.memberStatus.style.color = "";
+        }
+    }
+
+    setActiveSection(sectionKey) {
+        if (!sectionKey) return;
+        this.pageSections.forEach((section) => {
+            section.classList.toggle(
+                "is-active",
+                section.dataset.pageSection === sectionKey
+            );
+        });
+        if (this.navLinks) {
+            this.navLinks.forEach((link) => {
+                link.classList.toggle("is-active", link.dataset.nav === sectionKey);
+            });
+        }
+        if (this.pageTitle) {
+            const titleMap = {
+                dashboard: "Dashboard",
+                members: "Mitglieder",
+                audit: "Audit Log",
+            };
+            this.pageTitle.textContent = titleMap[sectionKey] || "Dashboard";
+        }
+    }
+
+    openMemberModal({ mode, name } = {}) {
+        if (!this.memberModal) return;
+        if (this.memberModalTitle) {
+            this.memberModalTitle.textContent =
+                mode === "edit" ? `Mitglied bearbeiten` : "Mitglied hinzufügen";
+        }
+        if (mode === "edit" && name && this.memberStatus) {
+            this.memberStatus.textContent = `Bearbeite ${name}. Felder aktualisieren und speichern.`;
+        }
+        this.memberModal.classList.remove("admin-hidden");
+    }
+
+    closeMemberModal() {
+        if (!this.memberModal) return;
+        this.memberModal.classList.add("admin-hidden");
+    }
+
+    clearMemberForm() {
+        if (!this.memberForm) return;
+        this.memberForm.reset();
+        if (this.memberIdInput) {
+            this.memberIdInput.value = "";
         }
     }
 
@@ -247,11 +334,29 @@ export class AdminView {
         this.auditResultsNote.textContent = `Zeige ${filteredCount} von ${totalCount} Einträgen.`;
     }
 
-    renderMembers(members) {
+    renderMembers(members, totalCount = members.length) {
+        if (!members.length && totalCount === 0) {
+            const colSpan = this.isAdmin ? 6 : 5;
+            this.memberTable.innerHTML = `<tr><td colspan="${colSpan}">Keine Mitglieder gefunden.</td></tr>`;
+            if (this.memberEmptyState) {
+                this.memberEmptyState.classList.remove("admin-hidden");
+            }
+            if (this.memberTableWrapper) {
+                this.memberTableWrapper.classList.add("admin-hidden");
+            }
+            return;
+        }
+
+        if (this.memberEmptyState) {
+            this.memberEmptyState.classList.add("admin-hidden");
+        }
+        if (this.memberTableWrapper) {
+            this.memberTableWrapper.classList.remove("admin-hidden");
+        }
+
         if (!members.length) {
             const colSpan = this.isAdmin ? 6 : 5;
             this.memberTable.innerHTML = `<tr><td colspan="${colSpan}">Keine Mitglieder gefunden.</td></tr>`;
-            this.updateStats([]);
             return;
         }
 
@@ -277,13 +382,18 @@ export class AdminView {
             })
             .join("");
 
-        this.updateStats(members);
     }
 
     renderMembersError() {
         const colSpan = this.isAdmin ? 6 : 5;
         this.memberTable.innerHTML =
             `<tr><td colspan="${colSpan}">Mitglieder konnten nicht geladen werden. Zugriffsregeln prüfen.</td></tr>`;
+        if (this.memberEmptyState) {
+            this.memberEmptyState.classList.add("admin-hidden");
+        }
+        if (this.memberTableWrapper) {
+            this.memberTableWrapper.classList.remove("admin-hidden");
+        }
     }
 
     updateStats(members) {
@@ -304,10 +414,28 @@ export class AdminView {
         }
     }
 
-    renderAuditLogs(logs) {
+    renderAuditLogs(logs, totalCount = logs.length) {
         if (!this.auditTable) return;
-        if (!logs.length) {
+        if (!logs.length && totalCount === 0) {
             this.auditTable.innerHTML = '<tr><td colspan="5">Noch keine Prüfaktivitäten.</td></tr>';
+            if (this.auditEmptyState) {
+                this.auditEmptyState.classList.remove("admin-hidden");
+            }
+            if (this.auditTableWrapper) {
+                this.auditTableWrapper.classList.add("admin-hidden");
+            }
+            return;
+        }
+
+        if (this.auditEmptyState) {
+            this.auditEmptyState.classList.add("admin-hidden");
+        }
+        if (this.auditTableWrapper) {
+            this.auditTableWrapper.classList.remove("admin-hidden");
+        }
+
+        if (!logs.length) {
+            this.auditTable.innerHTML = '<tr><td colspan="5">Keine Einträge gefunden.</td></tr>';
             return;
         }
 
@@ -330,11 +458,12 @@ export class AdminView {
         if (!this.auditTable) return;
         this.auditTable.innerHTML =
             '<tr><td colspan="5">Prüfprotokolle konnten nicht geladen werden. Zugriffsregeln prüfen.</td></tr>';
-    }
-
-    setAuditSidebarOpen(isOpen) {
-        if (!this.auditSidebar) return;
-        this.auditSidebar.classList.toggle("admin-sidebar--collapsed", !isOpen);
+        if (this.auditEmptyState) {
+            this.auditEmptyState.classList.add("admin-hidden");
+        }
+        if (this.auditTableWrapper) {
+            this.auditTableWrapper.classList.remove("admin-hidden");
+        }
     }
 
     getLoginFormData(event) {
