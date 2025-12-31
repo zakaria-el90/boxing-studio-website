@@ -1,47 +1,48 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Admin Dashboard | Little Champs Boxing Club</title>
+    <title>Admin-Dashboard | Little Champs Boxing Club</title>
     <link rel="stylesheet" href="../public/css/styles.css" />
     <link rel="stylesheet" href="css/admin.css" />
   </head>
   <body data-page="admin">
     <header class="admin-header">
       <div>
-        <p class="admin-eyebrow">Admin Area</p>
+        <p class="admin-eyebrow">Adminbereich</p>
         <h1 class="site-title">Little Champs Boxing Club</h1>
-        <p class="admin-subtitle">Member management &amp; payments overview</p>
+        <p class="admin-subtitle">Mitgliederverwaltung &amp; Zahlungsübersicht</p>
       </div>
       <button class="nav-button admin-logout" type="button" data-action="logout">
-        Log Out
+        Abmelden
       </button>
     </header>
 
     <main>
       <section class="hero admin-card" data-section="setup">
-        <h1>Connect your secure admin services</h1>
+        <h1>Verbinden Sie Ihre sicheren Admin-Dienste</h1>
         <p>
-          This dashboard is wired for a managed backend (authentication + database). Add your
-          Supabase project credentials in <code>admin/js/config.js</code> to enable secure
-          login and data management.
+          Dieses Dashboard ist für ein verwaltetes Backend (Authentifizierung + Datenbank)
+          vorbereitet. Fügen Sie Ihre Supabase-Projektzugangsdaten in
+          <code>admin/js/config.js</code> ein, um sichere Anmeldung und Datenverwaltung zu
+          aktivieren.
         </p>
         <ul class="list">
-          <li><strong>Authentication:</strong> Supabase Auth (email + password).</li>
-          <li><strong>Database:</strong> <code>members</code> table with row-level security.</li>
-          <li><strong>Payments:</strong> Store status only (no card data).</li>
+          <li><strong>Authentifizierung:</strong> Supabase Auth (E-Mail + Passwort).</li>
+          <li><strong>Datenbank:</strong> <code>members</code>-Tabelle mit Row-Level-Security.</li>
+          <li><strong>Zahlungen:</strong> Nur Status speichern (keine Kartendaten).</li>
         </ul>
         <p class="form-note">
-          This page will not accept logins until valid credentials are configured.
+          Diese Seite akzeptiert keine Anmeldungen, bis gültige Zugangsdaten konfiguriert sind.
         </p>
       </section>
 
       <section class="hero admin-card" data-section="login">
-        <h1>Admin Login</h1>
-        <p>Only authorized staff should access member details.</p>
+        <h1>Admin-Anmeldung</h1>
+        <p>Nur autorisiertes Personal sollte auf Mitgliederdetails zugreifen.</p>
         <form class="admin-form" data-form="login">
-          <label for="login-email">Email *</label>
+          <label for="login-email">E-Mail *</label>
           <input
             id="login-email"
             type="email"
@@ -50,7 +51,7 @@
             required
           />
 
-          <label for="login-password">Password *</label>
+          <label for="login-password">Passwort *</label>
           <input
             id="login-password"
             type="password"
@@ -59,26 +60,26 @@
             required
           />
 
-          <button class="nav-button" type="submit">Sign In</button>
+          <button class="nav-button" type="submit">Anmelden</button>
         </form>
         <p class="form-note" data-status="login"></p>
       </section>
 
       <section class="hero admin-card" data-section="dashboard">
-        <h1>Admin Dashboard</h1>
-        <p>Quick stats for memberships and payments.</p>
-        <p class="form-note">Signed in as: <strong data-stat="role">—</strong></p>
+        <h1>Admin-Dashboard</h1>
+        <p>Schnelle Kennzahlen zu Mitgliedschaften und Zahlungen.</p>
+        <p class="form-note">Angemeldet als: <strong data-stat="role">—</strong></p>
         <div class="card-grid admin-stats">
           <div class="card">
-            <h3>Total Members</h3>
+            <h3>Mitglieder gesamt</h3>
             <p class="stat" data-stat="total">0</p>
           </div>
           <div class="card">
-            <h3>Active Memberships</h3>
+            <h3>Aktive Mitgliedschaften</h3>
             <p class="stat" data-stat="active">0</p>
           </div>
           <div class="card">
-            <h3>Payments Up to Date</h3>
+            <h3>Zahlungen aktuell</h3>
             <p class="stat" data-stat="paid">0</p>
           </div>
         </div>
@@ -87,15 +88,15 @@
       <section class="hero admin-card" data-section="members">
         <div class="admin-section-header">
           <div>
-            <h2>Member Directory</h2>
-            <p>Search, review, and update member status.</p>
+            <h2>Mitgliederverzeichnis</h2>
+            <p>Mitgliedsstatus suchen, prüfen und aktualisieren.</p>
           </div>
           <div class="admin-actions">
             <button class="nav-button" type="button" data-action="export">
-              Export Excel
+              Excel exportieren
             </button>
             <button class="nav-button" type="button" data-action="refresh">
-              Refresh
+              Aktualisieren
             </button>
           </div>
         </div>
@@ -105,15 +106,15 @@
               <tr>
                 <th>Name</th>
                 <th>Status</th>
-                <th>Plan</th>
-                <th>Payment</th>
-                <th>Last Updated</th>
-                <th data-column="actions">Actions</th>
+                <th>Tarif</th>
+                <th>Zahlung</th>
+                <th>Zuletzt aktualisiert</th>
+                <th data-column="actions">Aktionen</th>
               </tr>
             </thead>
             <tbody data-table="members">
               <tr>
-                <td colspan="6">No members loaded yet.</td>
+                <td colspan="6">Noch keine Mitglieder geladen.</td>
               </tr>
             </tbody>
           </table>
@@ -121,35 +122,35 @@
       </section>
 
       <section class="hero admin-card" data-section="add-member">
-        <h2>Add or Update Member</h2>
-        <p>Use this form to add new members or update status fields.</p>
+        <h2>Mitglied hinzufügen oder aktualisieren</h2>
+        <p>Verwenden Sie dieses Formular, um neue Mitglieder hinzuzufügen oder Statusfelder zu aktualisieren.</p>
         <form class="admin-form" data-form="member">
 	      <input id="member-id" name="id" type="hidden" />
-          <label for="member-name">Full Name *</label>
+          <label for="member-name">Vollständiger Name *</label>
           <input id="member-name" name="full_name" type="text" required />
 
-          <label for="member-status">Membership Status *</label>
+          <label for="member-status">Mitgliedsstatus *</label>
           <select id="member-status" name="status" required>
-            <option value="Active">Active</option>
-            <option value="Paused">Paused</option>
-            <option value="Inactive">Inactive</option>
+            <option value="Active">Aktiv</option>
+            <option value="Paused">Pausiert</option>
+            <option value="Inactive">Inaktiv</option>
           </select>
 
-          <label for="member-plan">Plan *</label>
+          <label for="member-plan">Tarif *</label>
           <select id="member-plan" name="plan" required>
-            <option value="Drop-In">Drop-In</option>
-            <option value="Monthly Explorer">Monthly Explorer</option>
-            <option value="All-Star Unlimited">All-Star Unlimited</option>
+            <option value="Drop-In">Einzelbesuch</option>
+            <option value="Monthly Explorer">Monats-Entdecker</option>
+            <option value="All-Star Unlimited">All-Star Unbegrenzt</option>
           </select>
 
-          <label for="member-payment">Payment Status *</label>
+          <label for="member-payment">Zahlungsstatus *</label>
           <select id="member-payment" name="payment_status" required>
-            <option value="Up to Date">Up to Date</option>
-            <option value="Needs Follow-up">Needs Follow-up</option>
-            <option value="Past Due">Past Due</option>
+            <option value="Up to Date">Aktuell</option>
+            <option value="Needs Follow-up">Nachfassen nötig</option>
+            <option value="Past Due">Überfällig</option>
           </select>
 
-          <button class="nav-button" type="submit">Save Member</button>
+          <button class="nav-button" type="submit">Mitglied speichern</button>
         </form>
         <p class="form-note" data-status="member"></p>
       </section>
@@ -157,27 +158,27 @@
       <section class="hero admin-card" data-section="audit">
         <div class="admin-section-header">
           <div>
-            <h2>Audit Log</h2>
-            <p>Recent administrative activity.</p>
+            <h2>Prüfprotokoll</h2>
+            <p>Aktuelle administrative Aktivitäten.</p>
           </div>
           <button class="nav-button" type="button" data-action="refresh-audit">
-            Refresh
+            Aktualisieren
           </button>
         </div>
         <div class="admin-table-wrapper">
           <table class="admin-table">
             <thead>
               <tr>
-                <th>Time</th>
-                <th>Actor</th>
-                <th>Action</th>
-                <th>Entity</th>
+                <th>Zeit</th>
+                <th>Akteur</th>
+                <th>Aktion</th>
+                <th>Entität</th>
                 <th>Details</th>
               </tr>
             </thead>
             <tbody data-table="audit">
               <tr>
-                <td colspan="5">No audit activity yet.</td>
+                <td colspan="5">Noch keine Prüfaktivitäten.</td>
               </tr>
             </tbody>
           </table>
@@ -186,11 +187,11 @@
     </main>
 
     <footer>
-      <p>Admin access is protected by managed authentication and secure database rules.</p>
+      <p>Der Adminzugriff ist durch verwaltete Authentifizierung und sichere Datenbankregeln geschützt.</p>
       <div class="footer-badges">
-        <span class="badge">Role-Based Access</span>
-        <span class="badge">No Card Data</span>
-        <span class="badge">Audit Ready</span>
+        <span class="badge">Rollenbasierter Zugriff</span>
+        <span class="badge">Keine Kartendaten</span>
+        <span class="badge">Prüfbereit</span>
       </div>
     </footer>
 
