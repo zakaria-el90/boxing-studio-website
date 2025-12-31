@@ -4,6 +4,8 @@
     align-items: center;
     gap: 16px;
     text-align: center;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .admin-eyebrow {
@@ -21,6 +23,12 @@
 .admin-card {
     display: grid;
     gap: 16px;
+    box-shadow: 0 16px 40px rgba(15, 23, 42, 0.08);
+    border-color: rgba(15, 23, 42, 0.08);
+}
+
+.admin-main {
+    max-width: 1200px;
 }
 
 .admin-form {
@@ -44,6 +52,51 @@
     gap: 12px;
 }
 
+.admin-filters {
+    display: grid;
+    gap: 12px;
+    align-items: end;
+}
+
+.admin-field {
+    display: grid;
+    gap: 8px;
+    font-weight: 700;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.admin-field span {
+    color: rgba(15, 23, 42, 0.7);
+}
+
+.admin-field input,
+.admin-field select {
+    padding: 12px 14px;
+    border-radius: 12px;
+    border: 2px solid var(--navy);
+    font-size: 16px;
+    font-family: inherit;
+}
+
+.admin-field input:focus,
+.admin-field select:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.2);
+}
+
+.admin-reset {
+    width: fit-content;
+    padding: 12px 20px;
+}
+
+.admin-results {
+    margin: 0;
+    font-weight: 600;
+    color: rgba(15, 23, 42, 0.7);
+}
+
 .admin-actions {
     display: flex;
     flex-wrap: wrap;
@@ -58,6 +111,8 @@
     width: 100%;
     border-collapse: collapse;
     font-size: 16px;
+    border-radius: 16px;
+    overflow: hidden;
 }
 
 .admin-table th,
@@ -69,6 +124,10 @@
 
 .admin-table thead {
     background: var(--gray);
+}
+
+.admin-table tbody tr:nth-child(even) {
+    background: rgba(226, 232, 240, 0.4);
 }
 
 .admin-logout {
@@ -96,5 +155,24 @@
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
+    }
+
+    .admin-filters {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+@media (min-width: 960px) {
+    .admin-main {
+        grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+        align-items: start;
+    }
+
+    .admin-card--span-2 {
+        grid-column: 1 / -1;
+    }
+
+    .admin-filters {
+        grid-template-columns: minmax(0, 1.4fr) repeat(2, minmax(0, 1fr)) auto;
     }
 }

@@ -19,8 +19,8 @@
       </button>
     </header>
 
-    <main>
-      <section class="hero admin-card" data-section="setup">
+    <main class="admin-main">
+      <section class="hero admin-card admin-card--span-2" data-section="setup">
         <h1>Verbinden Sie Ihre sicheren Admin-Dienste</h1>
         <p>
           Dieses Dashboard ist für ein verwaltetes Backend (Authentifizierung + Datenbank)
@@ -38,7 +38,7 @@
         </p>
       </section>
 
-      <section class="hero admin-card" data-section="login">
+      <section class="hero admin-card admin-card--span-2" data-section="login">
         <h1>Admin-Anmeldung</h1>
         <p>Nur autorisiertes Personal sollte auf Mitgliederdetails zugreifen.</p>
         <form class="admin-form" data-form="login">
@@ -85,7 +85,7 @@
         </div>
       </section>
 
-      <section class="hero admin-card" data-section="members">
+      <section class="hero admin-card admin-card--span-2" data-section="members">
         <div class="admin-section-header">
           <div>
             <h2>Mitgliederverzeichnis</h2>
@@ -100,6 +100,40 @@
             </button>
           </div>
         </div>
+        <div class="admin-filters" aria-label="Mitgliederfilter">
+          <label class="admin-field" for="member-search">
+            <span>Schnellsuche</span>
+            <input
+              id="member-search"
+              type="search"
+              placeholder="Name, Status, Tarif..."
+              autocomplete="off"
+              data-filter="search"
+            />
+          </label>
+          <label class="admin-field" for="filter-status">
+            <span>Status</span>
+            <select id="filter-status" data-filter="status">
+              <option value="all">Alle</option>
+              <option value="Active">Aktiv</option>
+              <option value="Paused">Pausiert</option>
+              <option value="Inactive">Inaktiv</option>
+            </select>
+          </label>
+          <label class="admin-field" for="filter-payment">
+            <span>Zahlung</span>
+            <select id="filter-payment" data-filter="payment">
+              <option value="all">Alle</option>
+              <option value="Up to Date">Aktuell</option>
+              <option value="Needs Follow-up">Nachfassen nötig</option>
+              <option value="Past Due">Überfällig</option>
+            </select>
+          </label>
+          <button class="nav-button admin-reset" type="button" data-action="reset-filters">
+            Filter zurücksetzen
+          </button>
+        </div>
+        <p class="admin-results" data-results="members">Zeige 0 Mitglieder.</p>
         <div class="admin-table-wrapper">
           <table class="admin-table">
             <thead>
@@ -155,7 +189,7 @@
         <p class="form-note" data-status="member"></p>
       </section>
 
-      <section class="hero admin-card" data-section="audit">
+      <section class="hero admin-card admin-card--span-2" data-section="audit">
         <div class="admin-section-header">
           <div>
             <h2>Prüfprotokoll</h2>

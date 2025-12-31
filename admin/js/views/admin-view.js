@@ -16,6 +16,11 @@ export class AdminView {
         this.memberStatus = document.querySelector('[data-status="member"]');
         this.memberTable = document.querySelector('[data-table="members"]');
         this.auditTable = document.querySelector('[data-table="audit"]');
+        this.searchInput = document.querySelector('[data-filter="search"]');
+        this.statusFilter = document.querySelector('[data-filter="status"]');
+        this.paymentFilter = document.querySelector('[data-filter="payment"]');
+        this.resetFiltersButton = document.querySelector('[data-action="reset-filters"]');
+        this.resultsNote = document.querySelector('[data-results="members"]');
         this.memberIdInput = document.querySelector("#member-id");
         this.actionsHeader = document.querySelector('[data-column="actions"]');
         this.stats = {
@@ -60,6 +65,24 @@ export class AdminView {
     bindMemberSave(handler) {
         if (this.memberForm) {
             this.memberForm.addEventListener("submit", handler);
+        }
+    }
+
+    bindMemberFilters(handler) {
+        if (this.searchInput) {
+            this.searchInput.addEventListener("input", handler);
+        }
+        if (this.statusFilter) {
+            this.statusFilter.addEventListener("change", handler);
+        }
+        if (this.paymentFilter) {
+            this.paymentFilter.addEventListener("change", handler);
+        }
+    }
+
+    bindMemberFiltersReset(handler) {
+        if (this.resetFiltersButton) {
+            this.resetFiltersButton.addEventListener("click", handler);
         }
     }
 
@@ -111,6 +134,58 @@ export class AdminView {
         if (this.loginStatus) {
             this.loginStatus.textContent = "";
         }
+    }
+
+    getMemberFilters() {
+        return {
+            query: this.searchInput ? this.searchInput.value.trim() : "",
+            status: this.statusFilter ? this.statusFilter.value : "all",
+            payment: this.paymentFilter ? this.paymentFilter.value : "all",
+        };
+    }
+
+    resetMemberFilters() {
+        if (this.searchInput) {
+            this.searchInput.value = "";
+        }
+        if (this.statusFilter) {
+            this.statusFilter.value = "all";
+        }
+        if (this.paymentFilter) {
+            this.paymentFilter.value = "all";
+        }
+    }
+
+    filterMembers(members) {
+        const { query, status, payment } = this.getMemberFilters();
+        const normalizedQuery = query.toLowerCase();
+        const normalize = (value) => (value || "").toString().toLowerCase();
+
+        return members.filter((member) => {
+            const matchesQuery =
+                !normalizedQuery ||
+                [member.full_name, member.status, member.plan, member.payment_status].some(
+                    (value) => normalize(value).includes(normalizedQuery)
+                );
+            const matchesStatus =
+                status === "all" || normalize(member.status) === normalize(status);
+            const matchesPayment =
+                payment === "all" || normalize(member.payment_status) === normalize(payment);
+            return matchesQuery && matchesStatus && matchesPayment;
+        });
+    }
+
+    updateResultsCount(filteredCount, totalCount) {
+        if (!this.resultsNote) return;
+        if (totalCount === 0) {
+            this.resultsNote.textContent = "Keine Mitglieder vorhanden.";
+            return;
+        }
+        if (filteredCount === totalCount) {
+            this.resultsNote.textContent = `Zeige ${totalCount} Mitglieder.`;
+            return;
+        }
+        this.resultsNote.textContent = `Zeige ${filteredCount} von ${totalCount} Mitgliedern.`;
     }
 
     renderMembers(members) {
