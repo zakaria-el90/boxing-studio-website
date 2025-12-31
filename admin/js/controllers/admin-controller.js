@@ -9,11 +9,14 @@ export class AdminController {
         this.model = new AdminModel(supabase);
         this.view = new AdminView();
         this.members = [];
+        this.auditLogs = [];
+        this.isAuditSidebarOpen = false;
     }
 
     init() {
         this.view.bindLogin(this.handleLogin.bind(this));
         this.view.bindLogout(this.handleLogout.bind(this));
+        this.view.bindAuditToggle(this.handleAuditToggle.bind(this));
         this.view.bindRefresh(this.handleRefresh.bind(this));
         this.view.bindExport(this.handleExport.bind(this));
         this.view.bindAuditRefresh(this.handleAuditRefresh.bind(this));
@@ -21,6 +24,7 @@ export class AdminController {
         this.view.bindMemberEdit(this.handleMemberEdit.bind(this));
         this.view.bindMemberFilters(this.handleMemberFilterChange.bind(this));
         this.view.bindMemberFiltersReset(this.handleMemberFilterReset.bind(this));
+        this.view.bindAuditSearch(this.handleAuditSearchChange.bind(this));
 
         this.refreshSession();
     }
@@ -39,6 +43,11 @@ export class AdminController {
             isAuthenticated,
             role,
         });
+
+        if (role !== "admin") {
+            this.isAuditSidebarOpen = false;
+            this.view.setAuditSidebarOpen(false);
+        }
 
         if (isAuthenticated) {
             await this.loadMembers();
@@ -75,7 +84,8 @@ export class AdminController {
             this.view.renderAuditError();
             return;
         }
-        this.view.renderAuditLogs(data || []);
+        this.auditLogs = data || [];
+        this.applyAuditFilters();
     }
 
     async handleLogin(event) {
@@ -96,6 +106,8 @@ export class AdminController {
 
     async handleLogout() {
         await this.model.signOut();
+        this.isAuditSidebarOpen = false;
+        this.view.setAuditSidebarOpen(false);
         this.view.setSectionVisibility({
             isConfigured: true,
             isAuthenticated: false,
@@ -142,6 +154,11 @@ export class AdminController {
         await this.loadAuditLogs();
     }
 
+    handleAuditToggle() {
+        this.isAuditSidebarOpen = !this.isAuditSidebarOpen;
+        this.view.setAuditSidebarOpen(this.isAuditSidebarOpen);
+    }
+
     handleExport() {
         this.view.exportMembersToXlsx(this.members || []);
     }
@@ -162,10 +179,20 @@ export class AdminController {
         this.applyMemberFilters();
     }
 
+    handleAuditSearchChange() {
+        this.applyAuditFilters();
+    }
+
     applyMemberFilters() {
         const filteredMembers = this.view.filterMembers(this.members || []);
         this.view.renderMembers(filteredMembers);
         this.view.updateResultsCount(filteredMembers.length, this.members.length);
+    }
+
+    applyAuditFilters() {
+        const filteredLogs = this.view.filterAuditLogs(this.auditLogs || []);
+        this.view.renderAuditLogs(filteredLogs);
+        this.view.updateAuditResultsCount(filteredLogs.length, this.auditLogs.length);
     }
 }
 

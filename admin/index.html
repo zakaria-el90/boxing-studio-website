@@ -14,9 +14,18 @@
         <h1 class="site-title">Little Champs Boxing Club</h1>
         <p class="admin-subtitle">Mitgliederverwaltung &amp; Zahlungsübersicht</p>
       </div>
-      <button class="nav-button admin-logout" type="button" data-action="logout">
-        Abmelden
-      </button>
+      <div class="admin-header-actions">
+        <button
+          class="nav-button admin-toggle-audit admin-hidden"
+          type="button"
+          data-action="toggle-audit"
+        >
+          Prüfprotokoll
+        </button>
+        <button class="nav-button admin-logout" type="button" data-action="logout">
+          Abmelden
+        </button>
+      </div>
     </header>
 
     <main class="admin-main">
@@ -189,16 +198,32 @@
         <p class="form-note" data-status="member"></p>
       </section>
 
-      <section class="hero admin-card admin-card--span-2" data-section="audit">
+      <aside class="hero admin-card admin-sidebar admin-sidebar--collapsed" data-section="audit">
         <div class="admin-section-header">
           <div>
             <h2>Prüfprotokoll</h2>
             <p>Aktuelle administrative Aktivitäten.</p>
           </div>
-          <button class="nav-button" type="button" data-action="refresh-audit">
-            Aktualisieren
-          </button>
+          <div class="admin-actions">
+            <button class="nav-button" type="button" data-action="refresh-audit">
+              Aktualisieren
+            </button>
+            <button class="nav-button admin-toggle-audit" type="button" data-action="toggle-audit">
+              Schließen
+            </button>
+          </div>
         </div>
+        <label class="admin-field" for="audit-search">
+          <span>Schnellsuche</span>
+          <input
+            id="audit-search"
+            type="search"
+            placeholder="Akteur, Aktion, Details..."
+            autocomplete="off"
+            data-filter="audit-search"
+          />
+        </label>
+        <p class="admin-results" data-results="audit">Zeige 0 Einträge.</p>
         <div class="admin-table-wrapper">
           <table class="admin-table">
             <thead>
@@ -217,7 +242,7 @@
             </tbody>
           </table>
         </div>
-      </section>
+      </aside>
     </main>
 
     <footer>
