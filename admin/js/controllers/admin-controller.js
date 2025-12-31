@@ -10,13 +10,11 @@ export class AdminController {
         this.view = new AdminView();
         this.members = [];
         this.auditLogs = [];
-        this.isAuditSidebarOpen = false;
     }
 
     init() {
         this.view.bindLogin(this.handleLogin.bind(this));
         this.view.bindLogout(this.handleLogout.bind(this));
-        this.view.bindAuditToggle(this.handleAuditToggle.bind(this));
         this.view.bindRefresh(this.handleRefresh.bind(this));
         this.view.bindExport(this.handleExport.bind(this));
         this.view.bindAuditRefresh(this.handleAuditRefresh.bind(this));
@@ -25,6 +23,9 @@ export class AdminController {
         this.view.bindMemberFilters(this.handleMemberFilterChange.bind(this));
         this.view.bindMemberFiltersReset(this.handleMemberFilterReset.bind(this));
         this.view.bindAuditSearch(this.handleAuditSearchChange.bind(this));
+        this.view.bindNavigation(this.handleNavigation.bind(this));
+        this.view.bindMemberModalOpen(this.handleMemberModalOpen.bind(this));
+        this.view.bindMemberModalClose(this.handleMemberModalClose.bind(this));
 
         this.refreshSession();
     }
@@ -45,8 +46,7 @@ export class AdminController {
         });
 
         if (role !== "admin") {
-            this.isAuditSidebarOpen = false;
-            this.view.setAuditSidebarOpen(false);
+            this.view.setActiveSection("dashboard");
         }
 
         if (isAuthenticated) {
@@ -54,6 +54,7 @@ export class AdminController {
             if (role === "admin") {
                 await this.loadAuditLogs();
             }
+            this.view.setActiveSection("dashboard");
         }
     }
 
@@ -106,8 +107,7 @@ export class AdminController {
 
     async handleLogout() {
         await this.model.signOut();
-        this.isAuditSidebarOpen = false;
-        this.view.setAuditSidebarOpen(false);
+        this.view.closeMemberModal();
         this.view.setSectionVisibility({
             isConfigured: true,
             isAuthenticated: false,
@@ -142,6 +142,7 @@ export class AdminController {
 
         this.view.setMemberStatus("Mitglied gespeichert.");
         this.view.resetMemberForm(event);
+        this.view.closeMemberModal();
         await this.loadMembers();
         await this.loadAuditLogs();
     }
@@ -154,11 +155,6 @@ export class AdminController {
         await this.loadAuditLogs();
     }
 
-    handleAuditToggle() {
-        this.isAuditSidebarOpen = !this.isAuditSidebarOpen;
-        this.view.setAuditSidebarOpen(this.isAuditSidebarOpen);
-    }
-
     handleExport() {
         this.view.exportMembersToXlsx(this.members || []);
     }
@@ -166,6 +162,7 @@ export class AdminController {
     handleMemberEdit(memberId) {
         const member = this.members?.find((entry) => entry.id === memberId);
         if (!member) return;
+        this.view.openMemberModal({ mode: "edit", name: member.full_name });
         this.view.fillMemberForm(member);
         this.view.setMemberStatus(`Bearbeite ${member.full_name}. Felder aktualisieren und speichern.`);
     }
@@ -183,15 +180,31 @@ export class AdminController {
         this.applyAuditFilters();
     }
 
+    handleNavigation(section) {
+        this.view.setActiveSection(section);
+    }
+
+    handleMemberModalOpen() {
+        this.view.openMemberModal({ mode: "create" });
+        this.view.clearMemberForm();
+        this.view.clearMemberStatus();
+    }
+
+    handleMemberModalClose() {
+        this.view.closeMemberModal();
+        this.view.clearMemberStatus();
+    }
+
     applyMemberFilters() {
         const filteredMembers = this.view.filterMembers(this.members || []);
-        this.view.renderMembers(filteredMembers);
+        this.view.renderMembers(filteredMembers, this.members.length);
+        this.view.updateStats(this.members || []);
         this.view.updateResultsCount(filteredMembers.length, this.members.length);
     }
 
     applyAuditFilters() {
         const filteredLogs = this.view.filterAuditLogs(this.auditLogs || []);
-        this.view.renderAuditLogs(filteredLogs);
+        this.view.renderAuditLogs(filteredLogs, this.auditLogs.length);
         this.view.updateAuditResultsCount(filteredLogs.length, this.auditLogs.length);
     }
 }
