@@ -5,6 +5,7 @@ export class AdminView {
         this.loginSection = document.querySelector('[data-section="login"]');
         this.dashboardSection = document.querySelector('[data-page-section="dashboard"]');
         this.membersSection = document.querySelector('[data-page-section="members"]');
+        this.mediaSection = document.querySelector('[data-page-section="media"]');
         this.auditSection = document.querySelector('[data-page-section="audit"]');
         this.pageSections = document.querySelectorAll('[data-page-section]');
         this.pageTitle = document.querySelector("[data-page-title]");
@@ -21,6 +22,8 @@ export class AdminView {
         this.memberStatus = document.querySelector('[data-status="member"]');
         this.memberTable = document.querySelector('[data-table="members"]');
         this.auditTable = document.querySelector('[data-table="audit"]');
+        this.mediaForm = document.querySelector('[data-form="media"]');
+        this.mediaList = document.querySelector('[data-list="media"]');
         this.searchInput = document.querySelector('[data-filter="search"]');
         this.statusFilter = document.querySelector('[data-filter="status"]');
         this.paymentFilter = document.querySelector('[data-filter="payment"]');
@@ -38,6 +41,8 @@ export class AdminView {
         this.auditEmptyState = document.querySelector('[data-empty="audit"]');
         this.memberTableWrapper = document.querySelector('[data-table-wrapper="members"]');
         this.auditTableWrapper = document.querySelector('[data-table-wrapper="audit"]');
+        this.mediaStatus = document.querySelector('[data-status="media"]');
+        this.mediaEmptyState = document.querySelector('[data-empty="media"]');
         this.stats = {
             total: document.querySelector('[data-stat="total"]'),
             active: document.querySelector('[data-stat="active"]'),
@@ -81,6 +86,21 @@ export class AdminView {
         if (this.memberForm) {
             this.memberForm.addEventListener("submit", handler);
         }
+    }
+
+    bindMediaSave(handler) {
+        if (this.mediaForm) {
+            this.mediaForm.addEventListener("submit", handler);
+        }
+    }
+
+    bindMediaRemove(handler) {
+        if (!this.mediaList) return;
+        this.mediaList.addEventListener("click", (event) => {
+            const button = event.target.closest('[data-action="remove-video"]');
+            if (!button) return;
+            handler(button.dataset.videoId);
+        });
     }
 
     bindMemberFilters(handler) {
@@ -168,9 +188,12 @@ export class AdminView {
         if (this.auditSection) {
             this.auditSection.classList.toggle("admin-hidden", !this.isAdmin);
         }
+        if (this.mediaSection) {
+            this.mediaSection.classList.toggle("admin-hidden", !this.isAdmin);
+        }
         if (this.navLinks) {
             this.navLinks.forEach((link) => {
-                if (link.dataset.nav === "audit") {
+                if (link.dataset.nav === "audit" || link.dataset.nav === "media") {
                     link.classList.toggle("admin-hidden", !this.isAdmin);
                 }
             });
@@ -183,6 +206,10 @@ export class AdminView {
 
     setMemberStatus(message, isError = false) {
         this.#setStatusMessage(this.memberStatus, message, isError);
+    }
+
+    setMediaStatus(message, isError = false) {
+        this.#setStatusMessage(this.mediaStatus, message, isError);
     }
 
     clearLoginStatus() {
@@ -215,6 +242,7 @@ export class AdminView {
             const titleMap = {
                 dashboard: "Dashboard",
                 members: "Mitglieder",
+                media: "Media Galerie",
                 audit: "Audit Log",
             };
             this.pageTitle.textContent = titleMap[sectionKey] || "Dashboard";
@@ -244,6 +272,26 @@ export class AdminView {
         if (this.memberIdInput) {
             this.memberIdInput.value = "";
         }
+    }
+
+    clearMediaForm() {
+        if (!this.mediaForm) return;
+        this.mediaForm.reset();
+    }
+
+    clearMediaStatus() {
+        if (this.mediaStatus) {
+            this.mediaStatus.textContent = "";
+            this.mediaStatus.style.color = "";
+        }
+    }
+
+    getMediaFormData(event) {
+        const formData = new FormData(event.target);
+        return {
+            url: formData.get("url"),
+            title: formData.get("title"),
+        };
     }
 
     getMemberFilters() {
@@ -393,6 +441,49 @@ export class AdminView {
         }
         if (this.memberTableWrapper) {
             this.memberTableWrapper.classList.remove("admin-hidden");
+        }
+    }
+
+    renderMediaList(videos) {
+        if (!this.mediaList) return;
+
+        if (!videos.length) {
+            if (this.mediaEmptyState) {
+                this.mediaEmptyState.classList.remove("admin-hidden");
+            }
+            this.mediaList.innerHTML = "";
+            return;
+        }
+
+        if (this.mediaEmptyState) {
+            this.mediaEmptyState.classList.add("admin-hidden");
+        }
+
+        this.mediaList.innerHTML = videos
+            .map((video) => {
+                const title = video.title || "Fightclub Highlight";
+                return `
+        <div class="admin-media-item">
+          <div class="admin-media-meta">
+            <h4>${title}</h4>
+            <p>${video.video_url || video.video_id || ""}</p>
+          </div>
+          <button class="nav-button admin-action" type="button" data-action="remove-video" data-video-id="${video.id}">
+            Entfernen
+          </button>
+        </div>
+      `;
+            })
+            .join("");
+    }
+
+    renderMediaError() {
+        if (this.mediaList) {
+            this.mediaList.innerHTML =
+                "<p>Videos konnten nicht geladen werden. Zugriffsregeln prüfen.</p>";
+        }
+        if (this.mediaEmptyState) {
+            this.mediaEmptyState.classList.add("admin-hidden");
         }
     }
 

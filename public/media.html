@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Media | Aix-La-Chapelle Fightclub</title>
+    <link rel="stylesheet" href="css/styles-public.css" />
+  </head>
+  <body data-page="media">
+    <header class="site-header">
+      <div class="header-top">
+        <a href="index-public.html" class="admin-logo-link" data-nav="dashboard">
+          <img
+            src="img/icons/logo-ohne-background.png"
+            alt="Aix-La-Chapelle Fightclub Logo"
+            class="site-logo"
+          />
+        </a>
+        <h1 class="site-title">Aix-La-Chapelle Fightclub</h1>
+      </div>
+      <nav class="site-nav">
+        <a class="nav-button" data-page="home" href="index-public.html">Startseite</a>
+        <a class="nav-button" data-page="schedule" href="schedule.html">Stundenplan</a>
+        <a class="nav-button" data-page="pricing" href="pricing.html">Preise</a>
+        <a class="nav-button" data-page="media" href="media.html">Media</a>
+        <a class="nav-button" data-page="about" href="about.html">Über uns</a>
+        <a class="nav-button" data-page="contact" href="contact.html">Kontakt</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <h1>Unsere Momente im Ring</h1>
+        <p>
+          Highlights aus Training, Wettkampf und Teamgeist – frisch aus unserem
+          Fightclub. Tippe auf ein Video, um es direkt von YouTube abzuspielen.
+        </p>
+      </section>
+
+      <section class="card media-section">
+        <div class="media-header">
+          <div>
+            <h2>Media Galerie</h2>
+            <p class="form-note">Videos werden erst beim Abspielen geladen.</p>
+          </div>
+          <p class="form-note" data-media-status></p>
+        </div>
+        <div class="card-grid media-grid" data-media-grid></div>
+        <div class="media-empty" data-media-empty>
+          <p>Noch keine Videos verfügbar. Schaut bald wieder vorbei!</p>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p>Little Champs Boxing Club · Wo jedes Kind ein Champion ist</p>
+      <div class="footer-actions">
+        <div class="footer-badges">
+          <span class="badge">Echte Highlights</span>
+          <span class="badge">Teamgeist</span>
+          <span class="badge">Training Live</span>
+        </div>
+        <a href="../admin/index.html" class="admin-link-button">Admin-Bereich</a>
+      </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+    <script src="js/media-config.js"></script>
+    <script type="module" src="js/media.js"></script>
+  </body>
+</html>
