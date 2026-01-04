@@ -236,6 +236,44 @@ footer {
     font-weight: 700;
 }
 
+/* Admin Link Button */
+.admin-link-button {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  transition: background-color 0.3s ease;
+}
+
+.admin-link-button:hover {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+.footer-actions {
+    position: relative;
+    margin-top: 12px;
+}
+
+/* نحافظ على البادجز في الوسط */
+.footer-badges {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+/* نخرج زر Admin من حساب التمركز */
+.admin-link-button {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+
+
 @media (min-width: 700px) {
     body {
         font-size: 19px;
