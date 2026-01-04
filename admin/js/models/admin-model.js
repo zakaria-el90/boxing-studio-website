@@ -50,6 +50,13 @@ export class AdminModel {
             .limit(50);
     }
 
+    async fetchVideos() {
+        return this.supabase
+            .from("media_videos")
+            .select("id, title, video_url, video_id, created_at")
+            .order("created_at", { ascending: false });
+    }
+
     async logAudit({ action, entity, metadata }) {
         const { data: userData, error: userError } = await this.supabase.auth.getUser();
         if (userError) return { error: userError };
@@ -74,6 +81,14 @@ export class AdminModel {
 
     async updateMember(id, payload) {
         return this.supabase.from("members").update(payload).eq("id", id);
+    }
+
+    async addVideo(payload) {
+        return this.supabase.from("media_videos").insert(payload);
+    }
+
+    async deleteVideo(id) {
+        return this.supabase.from("media_videos").delete().eq("id", id);
     }
 }
 

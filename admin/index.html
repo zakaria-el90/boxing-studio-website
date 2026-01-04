@@ -23,6 +23,9 @@
           <button class="admin-nav-link" type="button" data-nav="members">
             Mitglieder
           </button>
+          <button class="admin-nav-link" type="button" data-nav="media">
+            Media
+          </button>
           <button class="admin-nav-link" type="button" data-nav="audit">
             Audit Log
           </button>
@@ -196,6 +199,53 @@
                   </tr>
                 </tbody>
               </table>
+            </div>
+          </section>
+
+          <section class="admin-page" data-page-section="media">
+            <div class="admin-page-header">
+              <div>
+                <h2>Media Galerie</h2>
+                <p>YouTube-Videos hinzufügen oder entfernen.</p>
+              </div>
+              <div class="admin-summary">
+                <p>Nur Admins können Änderungen vornehmen.</p>
+              </div>
+            </div>
+            <div class="card-grid">
+              <div class="card">
+                <h3>Neues Video hinzufügen</h3>
+                <form class="admin-form" data-form="media">
+                  <label for="media-url">YouTube-Link *</label>
+                  <input
+                    id="media-url"
+                    type="url"
+                    name="url"
+                    placeholder="https://youtu.be/VIDEO_ID"
+                    required
+                  />
+
+                  <label for="media-title">Titel (optional)</label>
+                  <input
+                    id="media-title"
+                    type="text"
+                    name="title"
+                    placeholder="z.B. Training Highlights"
+                  />
+
+                  <button class="nav-button" type="submit">Video hinzufügen</button>
+                </form>
+                <p class="form-note" data-status="media"></p>
+              </div>
+              <div class="card admin-media-card">
+                <h3>Aktuelle Videos</h3>
+                <p class="form-note">Einträge werden sofort synchronisiert.</p>
+                <div class="admin-empty" data-empty="media">
+                  <h3>Noch keine Videos</h3>
+                  <p>Fügen Sie den ersten YouTube-Link hinzu, um zu starten.</p>
+                </div>
+                <div class="admin-media-list" data-list="media"></div>
+              </div>
             </div>
           </section>
 

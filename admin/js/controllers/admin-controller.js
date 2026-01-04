@@ -10,6 +10,7 @@ export class AdminController {
         this.view = new AdminView();
         this.members = [];
         this.auditLogs = [];
+        this.videos = [];
     }
 
     init() {
@@ -26,6 +27,8 @@ export class AdminController {
         this.view.bindNavigation(this.handleNavigation.bind(this));
         this.view.bindMemberModalOpen(this.handleMemberModalOpen.bind(this));
         this.view.bindMemberModalClose(this.handleMemberModalClose.bind(this));
+        this.view.bindMediaSave(this.handleMediaAdd.bind(this));
+        this.view.bindMediaRemove(this.handleMediaRemove.bind(this));
 
         this.refreshSession();
     }
@@ -53,6 +56,7 @@ export class AdminController {
             await this.loadMembers();
             if (role === "admin") {
                 await this.loadAuditLogs();
+                await this.loadVideos();
             }
             this.view.setActiveSection("dashboard");
         }
@@ -89,6 +93,16 @@ export class AdminController {
         this.applyAuditFilters();
     }
 
+    async loadVideos() {
+        const { data, error } = await this.model.fetchVideos();
+        if (error) {
+            this.view.renderMediaError();
+            return;
+        }
+        this.videos = data || [];
+        this.view.renderMediaList(this.videos);
+    }
+
     async handleLogin(event) {
         event.preventDefault();
 
@@ -113,6 +127,7 @@ export class AdminController {
             isAuthenticated: false,
         });
         this.view.clearLoginStatus();
+        this.view.clearMediaStatus();
     }
 
     async handleMemberSave(event) {
@@ -195,6 +210,66 @@ export class AdminController {
         this.view.clearMemberStatus();
     }
 
+    async handleMediaAdd(event) {
+        event.preventDefault();
+
+        const { url, title } = this.view.getMediaFormData(event);
+        const videoId = this.extractYouTubeId(url);
+        if (!videoId) {
+            this.view.setMediaStatus("Bitte einen gültigen YouTube-Link angeben.", true);
+            return;
+        }
+
+        this.view.setMediaStatus("Video wird hinzugefügt...");
+
+        const payload = {
+            title: title ? title.toString().trim() : null,
+            video_url: url.toString().trim(),
+            video_id: videoId,
+        };
+
+        const { error } = await this.model.addVideo(payload);
+        if (error) {
+            this.view.setMediaStatus(error.message, true);
+            return;
+        }
+
+        await this.model.logAudit({
+            action: "media_added",
+            entity: "media_videos",
+            metadata: {
+                video_id: videoId,
+                title: payload.title || null,
+            },
+        });
+
+        this.view.setMediaStatus("Video hinzugefügt.");
+        this.view.clearMediaForm();
+        await this.loadVideos();
+    }
+
+    async handleMediaRemove(videoId) {
+        if (!videoId) return;
+        this.view.setMediaStatus("Video wird entfernt...");
+
+        const { error } = await this.model.deleteVideo(videoId);
+        if (error) {
+            this.view.setMediaStatus(error.message, true);
+            return;
+        }
+
+        await this.model.logAudit({
+            action: "media_removed",
+            entity: "media_videos",
+            metadata: {
+                video_id: videoId,
+            },
+        });
+
+        this.view.setMediaStatus("Video entfernt.");
+        await this.loadVideos();
+    }
+
     applyMemberFilters() {
         const filteredMembers = this.view.filterMembers(this.members || []);
         this.view.renderMembers(filteredMembers, this.members.length);
@@ -206,6 +281,36 @@ export class AdminController {
         const filteredLogs = this.view.filterAuditLogs(this.auditLogs || []);
         this.view.renderAuditLogs(filteredLogs, this.auditLogs.length);
         this.view.updateAuditResultsCount(filteredLogs.length, this.auditLogs.length);
+    }
+
+    extractYouTubeId(value) {
+        if (!value) return "";
+        const input = value.toString().trim();
+        if (!input) return "";
+
+        if (/^[a-zA-Z0-9_-]{11}$/.test(input)) {
+            return input;
+        }
+
+        try {
+            const url = new URL(input);
+            if (url.hostname === "youtu.be") {
+                return url.pathname.replace("/", "").slice(0, 11);
+            }
+            if (url.hostname.includes("youtube.com")) {
+                const videoId = url.searchParams.get("v");
+                if (videoId) return videoId.slice(0, 11);
+                const parts = url.pathname.split("/").filter(Boolean);
+                const embedIndex = parts.indexOf("embed");
+                if (embedIndex >= 0 && parts[embedIndex + 1]) {
+                    return parts[embedIndex + 1].slice(0, 11);
+                }
+            }
+        } catch (error) {
+            return "";
+        }
+
+        return "";
     }
 }
 
