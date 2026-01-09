@@ -1,3 +1,132 @@
+:root {
+    --black: #0b0b0d;
+    --charcoal: #15171b;
+    --elevated: #1f2329;
+    --border: #2b3139;
+    --gold: #d4af37;
+    --gold-bright: #ffc107;
+    --red: #c1121f;
+    --white: #f5f5f5;
+    --muted: #c9cdd3;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+    background: var(--black);
+    color: var(--white);
+    font-size: 18px;
+    line-height: 1.7;
+}
+
+.nav-button {
+    background: var(--charcoal);
+    color: var(--white);
+    text-decoration: none;
+    padding: 16px 24px;
+    border-radius: 999px;
+    font-size: 18px;
+    font-weight: 700;
+    border: 2px solid var(--border);
+    width: 100%;
+    max-width: 260px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.nav-button.is-active {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: var(--black);
+}
+
+.hero {
+    position: relative;
+    isolation: isolate;
+    color: var(--white);
+    padding: 96px 20px 72px;
+    min-height: 60vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+.hero h1 {
+    font-size: 34px;
+    margin-top: 0;
+    margin-bottom: 12px;
+}
+
+.hero p {
+    font-size: 18px;
+    margin: 0 0 24px;
+    color: var(--muted);
+}
+
+.card-grid {
+    display: grid;
+    gap: 16px;
+}
+
+.card {
+    background: var(--elevated);
+    padding: 20px;
+    border-radius: 18px;
+    border: 1px solid var(--border);
+}
+
+.card h3 {
+    margin-top: 0;
+    font-size: 20px;
+}
+
+.list {
+    list-style: none;
+    padding: 0;
+    margin: 16px 0 0;
+}
+
+.list li {
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.form-note {
+    font-size: 16px;
+    margin-bottom: 16px;
+    color: var(--muted);
+}
+
+footer {
+    text-align: center;
+    padding: 28px 16px 36px;
+    background: var(--black);
+    color: var(--white);
+    font-size: 16px;
+    border-top: 2px solid var(--border);
+}
+
+.footer-badges {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+}
+
+.badge {
+    background: var(--gold-bright);
+    color: var(--black);
+    padding: 8px 14px;
+    border-radius: 999px;
+    font-weight: 700;
+}
+
 .admin-shell {
     display: flex;
     min-height: 100vh;
@@ -414,6 +543,22 @@
 }
 
 @media (min-width: 700px) {
+    body {
+        font-size: 19px;
+    }
+
+    .nav-button {
+        width: auto;
+    }
+
+    .hero h1 {
+        font-size: 40px;
+    }
+
+    .card-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
     .admin-page-header {
         flex-direction: row;
         justify-content: space-between;
@@ -422,6 +567,20 @@
 
     .admin-filters {
         grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+@media (min-width: 1024px) {
+    body {
+        font-size: 20px;
+    }
+
+    .card-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .hero {
+        padding: 120px 20px 88px;
     }
 }
 
