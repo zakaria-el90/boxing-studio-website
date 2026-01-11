@@ -10,6 +10,214 @@
     --muted: #c9cdd3;
 }
 
+/* ============================================
+   Dark Mode Variables & Toggle
+   ============================================ */
+
+:root {
+  /* Light Mode Farben */
+  --bg-primary: #f8f9fa;
+  --bg-secondary: #ffffff;
+  --bg-card: #ffffff;
+  --bg-sidebar: #1a1a1a;
+  --text-primary: #212529;
+  --text-secondary: #6c757d;
+  --text-muted: #adb5bd;
+  --text-sidebar: #ffffff;
+  --border-color: #dee2e6;
+  --shadow: rgba(0, 0, 0, 0.05);
+  --shadow-hover: rgba(0, 0, 0, 0.1);
+  --accent-primary: #d32f2f;
+  --accent-hover: #b71c1c;
+  --success: #28a745;
+  --warning: #ffc107;
+  --danger: #dc3545;
+  --info: #17a2b8;
+}
+
+[data-theme="dark"] {
+  /* Dark Mode Farben */
+  --bg-primary: #0d0d0d;
+  --bg-secondary: #1a1a1a;
+  --bg-card: #2a2a2a;
+  --bg-sidebar: #000000;
+  --text-primary: #e9ecef;
+  --text-secondary: #adb5bd;
+  --text-muted: #6c757d;
+  --text-sidebar: #e9ecef;
+  --border-color: #343a40;
+  --shadow: rgba(0, 0, 0, 0.3);
+  --shadow-hover: rgba(0, 0, 0, 0.5);
+  --accent-primary: #ef5350;
+  --accent-hover: #f44336;
+  --success: #4caf50;
+  --warning: #ffb74d;
+  --danger: #e57373;
+  --info: #4dd0e1;
+}
+
+/* Dark Mode Toggle Button */
+.theme-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 2000;
+  background: var(--bg-card);
+  border: 2px solid var(--border-color);
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px var(--shadow);
+}
+
+.theme-toggle:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px var(--shadow-hover);
+}
+
+.theme-toggle-icon {
+  font-size: 24px;
+  transition: transform 0.3s ease;
+}
+
+.theme-toggle:hover .theme-toggle-icon {
+  transform: rotate(20deg);
+}
+
+/* Admin Shell */
+.admin-shell {
+  background-color: var(--bg-primary);
+}
+
+.admin-sidebar {
+  background-color: var(--bg-sidebar);
+  border-right: 1px solid var(--border-color);
+}
+
+.admin-sidebar-brand {
+  border-bottom: 1px solid var(--border-color);
+}
+
+.site-title,
+.admin-subtitle,
+.admin-eyebrow {
+  color: var(--text-sidebar);
+}
+
+.admin-nav-link {
+  color: var(--text-sidebar);
+  background-color: transparent;
+  transition: all 0.3s ease;
+}
+
+.admin-nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .admin-nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.admin-nav-link.is-active {
+  background-color: var(--accent-primary);
+  color: #ffffff;
+}
+
+.admin-content {
+  background-color: var(--bg-primary);
+}
+
+.admin-topbar {
+  background-color: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.admin-page-title {
+  color: var(--text-primary);
+}
+
+.admin-card,
+.card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 2px 8px var(--shadow);
+  transition: all 0.3s ease;
+}
+
+.admin-table {
+  background-color: var(--bg-card);
+  color: var(--text-primary);
+}
+
+.admin-table thead {
+  background-color: var(--bg-secondary);
+  border-bottom: 2px solid var(--border-color);
+}
+
+.admin-table tbody tr {
+  border-bottom: 1px solid var(--border-color);
+}
+
+.admin-table tbody tr:hover {
+  background-color: var(--bg-primary);
+}
+
+input,
+textarea,
+select {
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: var(--accent-primary);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(211, 47, 47, 0.1);
+}
+
+[data-theme="dark"] input:focus,
+[data-theme="dark"] textarea:focus,
+[data-theme="dark"] select:focus {
+  box-shadow: 0 0 0 3px rgba(239, 83, 80, 0.2);
+}
+
+.nav-button {
+  background-color: var(--accent-primary);
+  color: #ffffff;
+  transition: all 0.3s ease;
+}
+
+.nav-button:hover {
+  background-color: var(--accent-hover);
+}
+
+.admin-modal {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+[data-theme="dark"] .admin-modal {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.admin-modal-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+}
+
+code {
+  background-color: var(--bg-primary);
+  color: var(--accent-primary);
+  border: 1px solid var(--border-color);
+}
+
 * {
     box-sizing: border-box;
 }
