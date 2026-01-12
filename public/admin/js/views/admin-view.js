@@ -382,6 +382,16 @@ export class AdminView {
         this.auditResultsNote.textContent = `Zeige ${filteredCount} von ${totalCount} Einträgen.`;
     }
 
+    escapeHtml(str) {
+        if (!str && str !== 0) return "";
+        return String(str)
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+    }
+
     renderMembers(members, totalCount = members.length) {
         if (!members.length && totalCount === 0) {
             const colSpan = this.isAdmin ? 6 : 5;
@@ -412,17 +422,17 @@ export class AdminView {
             .map((member) => {
                 const actionCell = this.isAdmin
                     ? `<td>
-            <button class="nav-button admin-action" type="button" data-action="edit-member" data-member-id="${member.id}">
+            <button class="nav-button admin-action" type="button" data-action="edit-member" data-member-id="${this.escapeHtml(member.id)}">
               Bearbeiten
             </button>
           </td>`
                     : "";
                 return `
         <tr>
-          <td>${member.full_name}</td>
-          <td>${member.status}</td>
-          <td>${member.plan}</td>
-          <td>${member.payment_status}</td>
+          <td>${this.escapeHtml(member.full_name)}</td>
+          <td>${this.escapeHtml(member.status)}</td>
+          <td>${this.escapeHtml(member.plan)}</td>
+          <td>${this.escapeHtml(member.payment_status)}</td>
           <td>${this.#formatDate(member.updated_at)}</td>
           ${actionCell}
         </tr>
@@ -465,10 +475,10 @@ export class AdminView {
                 return `
         <div class="admin-media-item">
           <div class="admin-media-meta">
-            <h4>${title}</h4>
-            <p>${video.video_url || video.video_id || ""}</p>
+            <h4>${this.escapeHtml(title)}</h4>
+            <p>${this.escapeHtml(video.video_url || video.video_id || "")}</p>
           </div>
-          <button class="nav-button admin-action" type="button" data-action="remove-video" data-video-id="${video.id}">
+          <button class="nav-button admin-action" type="button" data-action="remove-video" data-video-id="${this.escapeHtml(video.id)}">
             Entfernen
           </button>
         </div>
@@ -535,10 +545,10 @@ export class AdminView {
                 return `
         <tr>
           <td>${this.#formatDateTime(entry.created_at)}</td>
-          <td>${entry.actor_role}</td>
-          <td>${entry.action}</td>
-          <td>${entry.entity}</td>
-          <td>${this.#formatMetadata(entry.metadata)}</td>
+          <td>${this.escapeHtml(entry.actor_role)}</td>
+          <td>${this.escapeHtml(entry.action)}</td>
+          <td>${this.escapeHtml(entry.entity)}</td>
+          <td>${this.escapeHtml(this.#formatMetadata(entry.metadata))}</td>
         </tr>
       `;
             })

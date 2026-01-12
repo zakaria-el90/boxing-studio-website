@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const links = document.querySelectorAll(".nav-button");
     links.forEach((link) => {
         if (link.dataset.page === current) {
-            link.classList.add("is-active");
+            link.classList.add("active");
         }
     });
 });

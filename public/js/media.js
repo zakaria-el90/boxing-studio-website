@@ -1,4 +1,8 @@
+// Note: This file uses the "Public Anon Key". It is safe to expose in the browser
+// because the database is protected by Row Level Security (RLS) policies.
+// Public users can only READ videos. Only authenticated Admins can ADD/DELETE.
 import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
+import { SUPABASE_URL, SUPABASE_KEY } from "./config.js";
 
 const fallbackVideos = [
     {
@@ -15,8 +19,6 @@ const fallbackVideos = [
     },
 ];
 
-const SUPABASE_URL = window.SUPABASE_URL || "";
-const SUPABASE_KEY = window.SUPABASE_KEY || "";
 const supabase = SUPABASE_URL && SUPABASE_KEY ? createClient(SUPABASE_URL, SUPABASE_KEY) : null;
 
 const grid = document.querySelector("[data-media-grid]");
