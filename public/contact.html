@@ -1,113 +1,156 @@
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
-	<meta charset="UTF-8"/>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>Kontakt | Aix-La-Chapelle Fightclub</title>
-	<link rel="stylesheet" href="css/styles-public.css"/>
+	<link rel="stylesheet" href="css/styles-public.css" />
 </head>
+
 <body data-page="contact">
-<header class="site-header">
-	<div class="header-top">
-		<a href="index.html" class="admin-logo-link" data-nav="dashboard">
-			<img src="img/icons/logo-ohne-background.png" alt="Aix-La-Chapelle Fightclub Logo" class="site-logo"/>
-		</a>
-		<h1 class="site-title">Aix-La-Chapelle Fightclub</h1>
-	</div>
-	<nav class="site-nav">
-		<a class="nav-button" data-page="home" href="index.html">Startseite</a>
-		<a class="nav-button" data-page="schedule" href="schedule.html">Stundenplan</a>
-		<a class="nav-button" data-page="pricing" href="pricing.html">Preise</a>
-		<a class="nav-button" data-page="media" href="media.html">Media</a>
-		<a class="nav-button" data-page="about" href="about.html">Über uns</a>
-		<a class="nav-button active" data-page="contact" href="contact.html">Kontakt</a>
-	</nav>
-</header>
+	<header class="site-header">
+		<div class="header-top">
+			<a href="index.html" class="admin-logo-link" data-nav="dashboard">
+				<img src="img/icons/logo-ohne-background.png" alt="Aix-La-Chapelle Fightclub Logo" class="site-logo" />
+			</a>
+			<h1 class="site-title">Aix-La-Chapelle Fightclub</h1>
+			<button class="mobile-menu-toggle" aria-label="Navigation öffnen/schließen" aria-expanded="false">
+				<span class="mobile-menu-icon" aria-hidden="true"></span>
+			</button>
+		</div>
+		<nav class="site-nav">
+			<a class="nav-button" data-page="home" href="index.html">Startseite</a>
+			<a class="nav-button" data-page="schedule" href="schedule.html">Stundenplan</a>
+			<a class="nav-button" data-page="pricing" href="pricing.html">Preise</a>
+			<a class="nav-button" data-page="media" href="media.html">Media</a>
+			<a class="nav-button" data-page="about" href="about.html">Über uns</a>
+			<a class="nav-button active" data-page="contact" href="contact.html">Kontakt</a>
+		</nav>
+	</header>
 
-<main>
-	<section class="hero">
-		<h1>Lasst uns sprechen</h1>
-		<p>Wir beantworten Fragen gern! Meldet euch, wir antworten schnell.</p>
-		<ul class="list">
-			<li><strong>Telefon:</strong> (555) 123-4567</li>
-			<li><strong>E-Mail:</strong> hello@littlechampsboxing.com</li>
-			<li><strong>Adresse:</strong> 123 Sunny Ave, Happy Town</li>
-			<li><strong>Schnupperbesuche:</strong> Bitte 10 Minuten früher kommen, damit wir alles vorbereiten können.
-			</li>
-		</ul>
-		<div class="contact-form">
-			<h2>Schickt uns eine Nachricht</h2>
-			<p class="form-note">
-				Felder mit * sind erforderlich. Ersetzen Sie den Formspree-Endpunkt und den reCAPTCHA-
-				Seitenschlüssel durch Ihre Live-Zugangsdaten.
-			</p>
-			<form
-					action="https://formspree.io/f/yourformid"
-					method="POST"
-					class="contact-form__form"
-			>
-				<label for="contact-name">Name *</label>
-				<input
-						id="contact-name"
-						name="name"
-						type="text"
-						autocomplete="name"
-						required
-				/>
+	<main>
+		<section class="page-hero">
+			<div class="hero-content">
+				<h1 class="hero-title">Kontakt</h1>
+				<p class="hero-subtitle">Wir freuen uns, von euch zu hören</p>
+				<p class="hero-description">
+					Habt ihr Fragen zu unseren Kursen, Trainern oder Mitgliedschaften?
+					Unser Team steht bereit, um euch zu helfen.
+				</p>
+			</div>
+		</section>
 
-				<label for="contact-info">Telefon oder E-Mail *</label>
-				<input
-						id="contact-info"
-						name="contact"
-						type="text"
-						autocomplete="tel email"
-						inputmode="text"
-						required
-						pattern="(^\\+?\\d[\\d\\s().-]{7,}$)|(^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$)"
-						title="Geben Sie eine gültige Telefonnummer oder E-Mail-Adresse ein."
-						placeholder="(555) 123-4567 oder du@email.com"
-				/>
+		<section class="contact-section">
+			<div class="contact-container">
+				<div class="contact-grid">
+					<!-- Contact Info Side -->
+					<div class="contact-info-card">
+						<h2>Kontaktinformationen</h2>
+						<p class="info-intro">Hier findet ihr uns. Kommt gerne für ein Schnuppertraining vorbei!</p>
 
-				<label for="contact-time">Bevorzugte Zeit *</label>
-				<select id="contact-time" name="preferred_time" required>
-					<option value="" disabled selected>Zeit auswählen</option>
-					<option value="Morgen">Morgen</option>
-					<option value="Nachmittag">Nachmittag</option>
-					<option value="Abend">Abend</option>
-				</select>
+						<div class="info-list">
+							<div class="info-item">
+								<div class="info-icon">📍</div>
+								<div class="info-content">
+									<h3>Adresse</h3>
+									<p>Rottstraße 21D 52068 Aachen</p>
+								</div>
+							</div>
 
-				<label for="contact-message">Nachricht *</label>
-				<textarea
-						id="contact-message"
-						name="message"
-						rows="5"
-						required
-						placeholder="Erzählen Sie uns kurz etwas über Ihr Kind und die Ziele."
-				></textarea>
+							<div class="info-item">
+								<div class="info-icon">📞</div>
+								<div class="info-content">
+									<h3>Telefon</h3>
+									<p>(+49) 15110854762 </p>
+								</div>
+							</div>
 
-				<div class="captcha-block">
-					<div class="g-recaptcha" data-sitekey="your-site-key"></div>
+							<div class="info-item">
+								<div class="info-icon">✉️</div>
+								<div class="info-content">
+									<h3>E-Mail</h3>
+									<p>boxingstudioaachen@gmail.com</p>
+								</div>
+							</div>
+
+							<div class="info-item">
+								<div class="info-icon">ℹ️</div>
+								<div class="info-content">
+									<h3>Schnupperbesuche</h3>
+									<p>Bitte 10 Minuten früher kommen, damit wir alles vorbereiten können.</p>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- Form Side -->
+					<div class="contact-form-card">
+						<h2>Nachricht senden</h2>
+						<p class="form-note">
+							Felder mit * sind erforderlich.
+						</p>
+
+						<form action="https://formspree.io/f/yourformid" method="POST" class="contact-form__form">
+							<div class="form-group">
+								<label for="contact-name">Name *</label>
+								<input id="contact-name" name="name" type="text" autocomplete="name" required
+									placeholder="Ihr Name" />
+							</div>
+
+							<div class="form-group">
+								<label for="contact-info">E-Mail oder Telefon *</label>
+								<input id="contact-info" name="contact" type="text" autocomplete="tel email"
+									inputmode="text" required
+									pattern="(^\\+?\\d[\\d\\s().-]{7,}$)|(^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$)"
+									title="Geben Sie eine gültige Telefonnummer oder E-Mail-Adresse ein."
+									placeholder="(555) 123-4567 oder email@beispiel.de" />
+							</div>
+
+							<div class="form-group">
+								<label for="contact-time">Bevorzugte Zeit *</label>
+								<div class="select-wrapper">
+									<select id="contact-time" name="preferred_time" required>
+										<option value="" disabled selected>Zeit auswählen</option>
+										<option value="Morgen">Morgen</option>
+										<option value="Nachmittag">Nachmittag</option>
+										<option value="Abend">Abend</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="contact-message">Nachricht *</label>
+								<textarea id="contact-message" name="message" rows="5" required
+									placeholder="Erzählen Sie uns kurz etwas über Ihre Fragen oder Ziele."></textarea>
+							</div>
+
+							<div class="captcha-block">
+								<div class="g-recaptcha" data-sitekey="your-site-key"></div>
+							</div>
+
+							<button type="submit" class="cta-button form-submit">Nachricht senden</button>
+						</form>
+					</div>
 				</div>
+			</div>
+		</section>
+	</main>
 
-				<button type="submit" class="nav-button form-submit">Nachricht senden</button>
-			</form>
+	<footer>
+		<p>Bereit für einen Besuch? Wir können es kaum erwarten, euren Champ kennenzulernen.</p>
+		<div class="footer-actions">
+			<div class="footer-badges">
+				<span class="badge">Schnelle Antworten</span>
+				<span class="badge">Herzlich</span>
+				<span class="badge">Lächeln beim ersten Kurs</span>
+			</div>
+			<a href="admin/index.html" class="admin-link-button">Admin-Bereich</a>
 		</div>
-	</section>
-</main>
-
-<footer>
-	<p>Bereit für einen Besuch? Wir können es kaum erwarten, euren Champ kennenzulernen.</p>
-	<div class="footer-actions">
-		<div class="footer-badges">
-			<span class="badge">Schnelle Antworten</span>
-			<span class="badge">Herzlich</span>
-			<span class="badge">Lächeln beim ersten Kurs</span>
-		</div>
-		<a href="admin/index.html" class="admin-link-button">Admin-Bereich</a>
-	</div>
-</footer>
-<script src="js/theme-manager.js"></script>
-<script src="js/script.js"></script>
-<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+	</footer>
+	<script src="js/theme-manager.js"></script>
+	<script src="js/script.js"></script>
+	<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </body>
+
 </html>

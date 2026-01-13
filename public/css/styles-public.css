@@ -70,6 +70,106 @@
   --accent-hover: #ffc107;
 
   --glass-border: 1px solid rgba(255, 255, 255, 0.08);
+
+  /* Table Specifics */
+  --table-stripe: rgba(255, 255, 255, 0.03);
+}
+
+/* ============================================
+   Media Grid & Videos
+   ============================================ */
+.media-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 2rem;
+}
+
+.media-card {
+  padding: 0 !important;
+  /* Override default card padding */
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  border: none;
+}
+
+.media-thumb {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  position: relative;
+  background: #000;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: block;
+  overflow: hidden;
+}
+
+.media-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+  opacity: 0.8;
+}
+
+.media-thumb:hover img {
+  transform: scale(1.05);
+  opacity: 1;
+}
+
+.media-play {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.3);
+  transition: background 0.3s ease;
+}
+
+.media-thumb:hover .media-play {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.media-play-icon {
+  width: 64px;
+  height: 64px;
+  background: rgba(255, 215, 0, 0.9);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #000;
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.media-thumb:hover .media-play-icon {
+  transform: scale(1.15);
+  background: #fff;
+}
+
+.media-embed {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #000;
+}
+
+.media-meta {
+  padding: 1.5rem;
+  background: var(--bg-card);
+}
+
+.media-meta h3 {
+  font-size: 1.1rem;
+  margin: 0;
+  line-height: 1.4;
+  display: -webkit-box;
+  line-clamp: 2;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 /* Base Reset */
@@ -200,6 +300,7 @@ body {
   text-align: center;
   padding: 2rem;
   max-width: 900px;
+  margin: 0 auto;
   animation: fadeInUp 0.8s ease-out;
 }
 
@@ -310,7 +411,8 @@ body {
 .benefits-grid,
 .quick-nav-grid,
 .card-grid,
-.media-grid {
+.media-grid,
+.trainer-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 2rem;
@@ -321,26 +423,39 @@ body {
 .card,
 .trainer-card {
   background: var(--bg-card);
-  padding: 1.5rem;
+  padding: 2.5rem;
   border-radius: var(--radius-lg);
   border: 3px solid var(--border-color);
   box-shadow: var(--shadow);
   transition: all 0.4s ease;
   display: flex;
-  flex-direction: row;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
   gap: 1.5rem;
   text-align: left;
+  height: 100%;
 }
 
+.trainer-card {
+  align-items: center;
+  text-align: center;
+}
+
+.trainer-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+
 .trainer-photo {
-  width: 100px;
-  height: 100px;
-  margin: 0;
+  width: 250px;
+  height: 250px;
+  margin: 0 auto 1rem;
   flex-shrink: 0;
   border-radius: 50%;
   overflow: hidden;
-  border: 2px solid var(--accent-primary);
+  border: 4px solid var(--accent-primary);
   box-shadow: var(--shadow);
 }
 
@@ -474,24 +589,156 @@ footer p {
 /* ============================================
    Responsive
    ============================================ */
+/* ============================================
+   Mobile Menu Toggle
+   ============================================ */
+.mobile-menu-toggle {
+  display: none;
+  background: transparent;
+  border: none;
+  padding: 0.5rem;
+  cursor: pointer;
+  z-index: 101;
+  color: var(--text-primary);
+}
+
+.mobile-menu-icon {
+  display: block;
+  width: 28px;
+  height: 2px;
+  background: currentColor;
+  position: relative;
+  transition: background 0.2s ease;
+}
+
+.mobile-menu-icon::before,
+.mobile-menu-icon::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: currentColor;
+  transition: transform 0.3s ease;
+}
+
+.mobile-menu-icon::before {
+  transform: translateY(-8px);
+}
+
+.mobile-menu-icon::after {
+  transform: translateY(8px);
+}
+
+/* Animate Icon when open */
+.mobile-menu-toggle.is-open .mobile-menu-icon {
+  background: transparent;
+}
+
+.mobile-menu-toggle.is-open .mobile-menu-icon::before {
+  transform: rotate(45deg);
+}
+
+.mobile-menu-toggle.is-open .mobile-menu-icon::after {
+  transform: rotate(-45deg);
+}
+
+
+/* ============================================
+   Responsive
+   ============================================ */
+@media (max-width: 900px) {
+  .contact-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .contact-info-card,
+  .contact-form-card {
+    padding: 2rem;
+  }
+
+  .page-hero .hero-title {
+    font-size: 2.5rem;
+  }
+}
+
 @media (max-width: 768px) {
   .hero-title {
     font-size: 2.5rem;
   }
 
+  /* Header Adjustments */
+  .site-header {
+    padding: 1rem;
+    position: sticky;
+  }
+
+  .header-top {
+    margin-bottom: 0;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 1rem;
+    padding-right: 3rem;
+    /* Space for toggle */
+    position: relative;
+  }
+
+  .mobile-menu-toggle {
+    display: block;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .site-logo {
+    height: 40px;
+    /* Smaller logo */
+  }
+
+  .site-title {
+    font-size: 1.1rem;
+    line-height: 1.2;
+  }
+
+  /* Navigation Collapsible */
   .site-nav {
+    display: none;
+    /* Hidden by default */
     flex-direction: column;
     width: 100%;
+    border-top: 1px solid var(--border-color);
+    margin-top: 1rem;
+    padding-top: 1rem;
+    gap: 0.5rem;
+  }
+
+  .site-nav.is-open {
+    display: flex;
+    animation: slideDown 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .site-nav a {
     width: 100%;
     text-align: center;
+    padding: 1rem;
+    background: var(--bg-primary);
+    /* Distinct from header bg */
+    border: 1px solid var(--border-color);
   }
 
-  .header-top {
-    flex-direction: column;
-    text-align: center;
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 }
 
@@ -521,4 +768,516 @@ footer p {
   transform: translateY(-5px) scale(1.1);
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
   border-color: var(--accent-primary);
+}
+
+/* ============================================
+   Contact Page Specifics
+   ============================================ */
+
+/* Reduced Hero for subpages */
+.page-hero {
+  position: relative;
+  padding: 8rem 2rem 4rem;
+  text-align: center;
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 0;
+  /* Connected to content */
+}
+
+.page-hero .hero-title {
+  font-size: 3.5rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+  color: var(--text-primary);
+}
+
+.page-hero .hero-subtitle {
+  font-size: 1.5rem;
+  color: var(--gold);
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  margin-bottom: 1rem;
+}
+
+.page-hero .hero-description {
+  font-size: 1.2rem;
+  color: var(--text-secondary);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Contact Section & Grid */
+.contact-section {
+  padding: 4rem 2rem 8rem;
+  background-color: var(--bg-primary);
+}
+
+.contact-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  /* Info takes less space than form */
+  gap: 3rem;
+  align-items: start;
+}
+
+/* Cards shared styles */
+.contact-info-card,
+.contact-form-card {
+  background: var(--bg-card);
+  padding: 3rem;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow);
+}
+
+[data-theme="dark"] .contact-info-card,
+[data-theme="dark"] .contact-form-card {
+  border: var(--glass-border);
+  backdrop-filter: blur(12px);
+}
+
+.contact-info-card h2,
+.contact-form-card h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  color: var(--text-primary);
+}
+
+.info-intro,
+.form-note {
+  color: var(--text-secondary);
+  margin-bottom: 2.5rem;
+  line-height: 1.6;
+}
+
+/* Contact Info List */
+.info-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.info-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.25rem;
+}
+
+.info-icon {
+  font-size: 1.5rem;
+  background: var(--bg-primary);
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  flex-shrink: 0;
+}
+
+.info-content h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.25rem;
+}
+
+.info-content p {
+  color: var(--text-secondary);
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+/* Form Layout */
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: 0.95rem;
+}
+
+/* Ensure inputs in the new contact form match the theme but with specific spacing */
+.contact-form__form input,
+.contact-form__form textarea,
+.contact-form__form select {
+  margin-bottom: 0;
+  /* managed by form-group */
+  background-color: var(--bg-primary);
+}
+
+.contact-form__form button {
+  width: 100%;
+  margin-top: 1rem;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .contact-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .contact-info-card,
+  .contact-form-card {
+    padding: 2rem;
+  }
+
+  .page-hero .hero-title {
+    font-size: 2.5rem;
+  }
+}
+
+/* ============================================
+   Schedule Table (Working Hours)
+   ============================================ */
+.schedule-container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.schedule-card {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border-color);
+  overflow: hidden;
+}
+
+[data-theme="dark"] .schedule-card {
+  border: var(--glass-border);
+  backdrop-filter: blur(12px);
+}
+
+.schedule-header {
+  padding: 2rem;
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-color);
+  text-align: center;
+}
+
+.schedule-header h2 {
+  margin: 0;
+  font-size: 1.8rem;
+  color: var(--text-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.schedule-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.schedule-row {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid var(--border-color);
+  align-items: center;
+  transition: background 0.2s ease;
+}
+
+.schedule-row:last-child {
+  border-bottom: none;
+}
+
+.schedule-row:hover {
+  background: var(--bg-primary);
+}
+
+.day-name {
+  font-weight: 700;
+  color: var(--text-primary);
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.day-name::before {
+  content: '';
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background: var(--accent-primary);
+  border-radius: 50%;
+}
+
+.time-slot {
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+  font-weight: 500;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.class-type {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+}
+
+.schedule-row.is-today {
+  background: rgba(255, 215, 0, 0.05);
+  border-left: 4px solid var(--gold);
+}
+
+.schedule-row.is-today .day-name {
+  color: var(--gold);
+}
+
+@media (max-width: 600px) {
+  .schedule-row {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+    text-align: center;
+  }
+
+  .day-name {
+    justify-content: center;
+  }
+}
+
+/* ============================================
+   New Schedule Page Design (Cards & Grid)
+   ============================================ */
+
+/* Main Header */
+.main-header {
+  text-align: center;
+  margin-bottom: 3rem;
+  margin-top: 4rem;
+}
+
+.main-header h2 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.02em;
+}
+
+.main-header p {
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+}
+
+/* Opening Hours Card */
+.opening-hours-card {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  padding: 3rem;
+  border: 1px solid var(--accent-primary);
+  /* Gold border to highlight */
+  box-shadow: var(--shadow-glow);
+  /* Glow effect */
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+  margin-bottom: 4rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.opening-hours-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: var(--gradient-gold);
+}
+
+.opening-icon {
+  width: 120px;
+  height: 120px;
+  background: rgba(255, 215, 0, 0.1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.opening-icon img {
+  width: 60px;
+  height: 60px;
+  opacity: 0.9;
+}
+
+.opening-content {
+  flex-grow: 1;
+}
+
+.opening-content h2 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  font-weight: 800;
+}
+
+.opening-status {
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+  color: var(--gold);
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+.opening-time {
+  font-size: 3.5rem;
+  font-weight: 900;
+  line-height: 1;
+  margin-bottom: 1rem;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+.opening-note {
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+  max-width: 600px;
+}
+
+/* Schedule Grid */
+.schedule-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  /* Responsive columns */
+  gap: 2rem;
+}
+
+/* Sport Cards */
+.sport-card {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.sport-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-hover);
+  border-color: var(--accent-primary);
+}
+
+.sport-header {
+  background: var(--bg-secondary);
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sport-header h3 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin: 0;
+}
+
+.sport-badge {
+  font-size: 0.75rem;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  font-weight: 600;
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+}
+
+/* Schedule Table/List in Card */
+.sport-schedule {
+  padding: 1.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.schedule-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.schedule-row:last-child {
+  border-bottom: none;
+}
+
+.schedule-row .day {
+  font-weight: 600;
+  color: var(--text-secondary);
+  width: 100px;
+  /* Fixed width for alignment */
+}
+
+.schedule-row .time {
+  text-align: right;
+  font-weight: 500;
+  color: var(--text-muted);
+  /* Default muted for "Self-training" */
+  font-size: 0.95rem;
+}
+
+.schedule-row .time.active {
+  color: var(--text-primary);
+  font-weight: 700;
+  background: rgba(255, 215, 0, 0.1);
+  /* Subtle highlight */
+  padding: 0.2rem 0.6rem;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 215, 0, 0.2);
+}
+
+/* Dark Mode Adjustments */
+[data-theme="dark"] .schedule-row .time.active {
+  color: var(--gold);
+  background: rgba(255, 215, 0, 0.15);
+  border-color: rgba(255, 215, 0, 0.3);
+}
+
+[data-theme="dark"] .opening-hours-card {
+  background: linear-gradient(145deg, rgba(26, 29, 36, 0.9), rgba(18, 20, 24, 0.95));
+}
+
+
+/* Responsive */
+@media (max-width: 768px) {
+  .opening-hours-card {
+    flex-direction: column;
+    text-align: center;
+    padding: 2rem;
+    gap: 1.5rem;
+  }
+
+  .opening-content {
+    width: 100%;
+  }
+
+  .opening-time {
+    font-size: 2.5rem;
+  }
 }

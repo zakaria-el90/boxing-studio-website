@@ -1,65 +1,236 @@
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
-	<meta charset="UTF-8"/>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>Stundenplan | Aix-La-Chapelle Fightclub</title>
-	<link rel="stylesheet" href="css/styles-public.css"/>
+	<link rel="stylesheet" href="css/styles-public.css" />
 </head>
+
 <body data-page="schedule">
-<header class="site-header">
-	<div class="header-top">
-		<a href="index.html" class="admin-logo-link" data-nav="dashboard">
-			<img src="img/icons/logo-ohne-background.png" alt="Aix-La-Chapelle Fightclub Logo" class="site-logo"/>
-		</a>
-		<h1 class="site-title">Aix-La-Chapelle Fightclub</h1>
-	</div>
-	<nav class="site-nav">
-		<a class="nav-button" data-page="home" href="index.html">Startseite</a>
-		<a class="nav-button active" data-page="schedule" href="schedule.html">Stundenplan</a>
-		<a class="nav-button" data-page="pricing" href="pricing.html">Preise</a>
-		<a class="nav-button" data-page="media" href="media.html">Media</a>
-		<a class="nav-button" data-page="about" href="about.html">Über uns</a>
-		<a class="nav-button" data-page="contact" href="contact.html">Kontakt</a>
-	</nav>
-</header>
-
-<main>
-	<section class="hero">
-		<h1>Wöchentlicher Kursplan</h1>
-		<p>Wählt eure Lieblingszeit und kommt bereit zur Bewegung!</p>
-		<h2 class="section-title">Boxen</h2>
-		<ul class="list">
-			<li><strong>Montag</strong> · 19:15 Uhr bis 20:30 Uhr Boxtraining</li>
-			<li><strong>Dienstag</strong> · 19:15 Uhr bis 20:30 Uhr Sparring</li>
-			<li><strong>Mittwoch</strong> · 19:15 Uhr bis 20:30 Uhr Box Training</li>
-			<li><strong>Donnerstag</strong> · 19:15 Uhr bis 20:30 Uhr Sparring</li>
-			<li><strong>Freitag</strong> · 19:15 Uhr bis 20:30 Uhr Box Training</li>
-		</ul>
-		<h2 class="section-title">Kickboxen</h2>
-		<ul class="list">
-			<li>Donnerstag · 18:00 – 19:15 · Kickboxen</li>
-		</ul>
-		<h2 class="section-title">MMA</h2>
-		<ul class="list">
-			<li>Montag · 18:00 – 19:15 · MMA</li>
-			<li>Mittwoch · 18:00 – 19:15 · MMA</li>
-		</ul>
-
-	</section>
-</main>
-
-<footer>
-	<p>Fragen zu den Kursen? Wir helfen gerne!</p>
-	<div class="footer-actions">
-		<div class="footer-badges">
-			<span class="badge">Kleine Gruppen</span>
-			<span class="badge">Spielerisch</span>
-			<span class="badge">Sicherer Raum</span>
+	<header class="site-header">
+		<div class="header-top">
+			<a href="index.html" class="admin-logo-link" data-nav="dashboard">
+				<img src="img/icons/logo-ohne-background.png" alt="Aix-La-Chapelle Fightclub Logo" class="site-logo" />
+			</a>
+			<h1 class="site-title">Aix-La-Chapelle Fightclub</h1>
+			<button class="mobile-menu-toggle" aria-label="Navigation öffnen/schließen" aria-expanded="false">
+				<span class="mobile-menu-icon" aria-hidden="true"></span>
+			</button>
 		</div>
-		<a href="admin/index.html" class="admin-link-button">Admin-Bereich</a>
-</footer>
-<script src="js/theme-manager.js"></script>
-<script src="js/script.js"></script>
+		<nav class="site-nav">
+			<a class="nav-button" data-page="home" href="index.html">Startseite</a>
+			<a class="nav-button active" data-page="schedule" href="schedule.html">Stundenplan</a>
+			<a class="nav-button" data-page="pricing" href="pricing.html">Preise</a>
+			<a class="nav-button" data-page="media" href="media.html">Media</a>
+			<a class="nav-button" data-page="about" href="about.html">Über uns</a>
+			<a class="nav-button" data-page="contact" href="contact.html">Kontakt</a>
+		</nav>
+	</header>
+
+	<main>
+		<section class="page-hero">
+			<h1 class="hero-title">Wöchentlicher Kursplan</h1>
+			<p class="hero-subtitle">Dein Weg zum Champion</p>
+			<p class="hero-description">
+				Wähle deine Trainingszeit und komm vorbei. Egal ob Anfänger oder Profi – bei uns findest du deinen
+				Platz.
+			</p>
+		</section>
+
+		<section class="schedule-container" style="padding: 0 2rem 6rem;">
+			<!-- General Opening Hours -->
+			<div class="opening-hours-card">
+				<div class="opening-icon">
+					<img src="img/icons/gym-open.svg" alt="Open Gym"
+						onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
+					<span style="display:none; font-size: 2rem;">🏋️</span>
+				</div>
+				<div class="opening-content">
+					<h2>Allgemeine Öffnungszeiten</h2>
+					<p class="opening-status">Täglich geöffnet • Freies Training</p>
+					<div class="opening-time">08:00 – 23:00 Uhr</div>
+					<p class="opening-note">In dieser Zeit kannst du jederzeit eigenständig an den Geräten und
+						Säcken
+						trainieren.</p>
+				</div>
+			</div>
+
+			<div class="schedule-header main-header">
+				<h2>Trainer-Geleitete Kurse</h2>
+				<p>Unsere Coaches sind zu diesen Zeiten für dich da.</p>
+			</div>
+
+			<div class="schedule-grid">
+				<!-- MMA -->
+				<div class="sport-card mma-card">
+					<div class="sport-header">
+						<h3>MMA</h3>
+						<span class="sport-badge">Mixed Martial Arts</span>
+					</div>
+					<div class="sport-schedule">
+						<div class="schedule-row">
+							<span class="day">Montag</span>
+							<span class="time active">18:00 – 19:15</span>
+						</div>
+						<div class="schedule-row">
+							<span class="day">Dienstag</span>
+							<span class="time">Self-training only</span>
+						</div>
+						<div class="schedule-row">
+							<span class="day">Mittwoch</span>
+							<span class="time active">18:00 – 19:15</span>
+						</div>
+						<div class="schedule-row">
+							<span class="day">Donnerstag</span>
+							<span class="time">Self-training only</span>
+						</div>
+						<div class="schedule-row">
+							<span class="day">Freitag</span>
+							<span class="time">Self-training only</span>
+						</div>
+						<div class="schedule-row">
+							<span class="day">Samstag</span>
+							<span class="time">Self-training only</span>
+						</div>
+						<div class="schedule-row">
+							<span class="day">Sonntag</span>
+							<span class="time">Self-training only</span>
+						</div>
+					</div>
+				</div>
+
+				<!-- Boxen -->
+				<div class="sport-card box-card">
+					<div class="sport-header">
+						<h3>Boxen</h3>
+						<span class="sport-badge">Klassisches Boxen</span>
+					</div>
+					<div class="sport-schedule">
+						<div class="schedule-row">
+							<span class="day">Montag</span>
+							<span class="time active">19:15 – 20:30</span>
+						</div>
+						<div class="schedule-row">
+							<span class="day">Dienstag</span>
+							<span class="time">Self-training only</span>
+						</div>
+						<div class="schedule-row">
+							<span class="day">Mittwoch</span>
+							<span class="time active">19:15 – 20:30</span>
+						</div>
+						<div class="schedule-row">
+							<span class="day">Donnerstag</span>
+							<span class="time">Self-training only</span>
+						</div>
+						<div class="schedule-row">
+							<span class="day">Freitag</span>
+							<span class="time active">19:15 – 20:30</span>
+						</div>
+						<div class="schedule-row">
+							<span class="day">Samstag</span>
+							<span class="time">Self-training only</span>
+						</div>
+						<div class="schedule-row">
+							<span class="day">Sonntag</span>
+							<span class="time">Self-training only</span>
+						</div>
+					</div>
+				</div>
+
+				<!-- Kickboxen -->
+				<div class="sport-card kickbox-card">
+					<div class="sport-header">
+						<h3>Kickboxen</h3>
+						<span class="sport-badge">Kickboxing</span>
+					</div>
+					<div class="sport-schedule">
+						<div class="schedule-row">
+							<span class="day">Montag</span>
+							<span class="time">Self-training only</span>
+						</div>
+						<div class="schedule-row">
+							<span class="day">Dienstag</span>
+							<span class="time">Self-training only</span>
+						</div>
+						<div class="schedule-row">
+							<span class="day">Mittwoch</span>
+							<span class="time">Self-training only</span>
+						</div>
+						<div class="schedule-row">
+							<span class="day">Donnerstag</span>
+							<span class="time active">18:00 – 19:15</span>
+						</div>
+						<div class="schedule-row">
+							<span class="day">Freitag</span>
+							<span class="time">Self-training only</span>
+						</div>
+						<div class="schedule-row">
+							<span class="day">Samstag</span>
+							<span class="time">Self-training only</span>
+						</div>
+						<div class="schedule-row">
+							<span class="day">Sonntag</span>
+							<span class="time">Self-training only</span>
+						</div>
+					</div>
+				</div>
+
+				<!-- Sparring -->
+				<div class="sport-card sparring-card">
+					<div class="sport-header">
+						<h3>Sparring</h3>
+						<span class="sport-badge">Wettkampf-Training</span>
+					</div>
+					<div class="sport-schedule">
+						<div class="schedule-row">
+							<span class="day">Montag</span>
+							<span class="time">Self-training only</span>
+						</div>
+						<div class="schedule-row">
+							<span class="day">Dienstag</span>
+							<span class="time active">19:15 – 20:30</span>
+						</div>
+						<div class="schedule-row">
+							<span class="day">Mittwoch</span>
+							<span class="time">Self-training only</span>
+						</div>
+						<div class="schedule-row">
+							<span class="day">Donnerstag</span>
+							<span class="time active">19:15 – 20:30</span>
+						</div>
+						<div class="schedule-row">
+							<span class="day">Freitag</span>
+							<span class="time">Self-training only</span>
+						</div>
+						<div class="schedule-row">
+							<span class="day">Samstag</span>
+							<span class="time">Self-training only</span>
+						</div>
+						<div class="schedule-row">
+							<span class="day">Sonntag</span>
+							<span class="time">Self-training only</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</main>
+
+	<footer>
+		<p>Fragen zu den Kursen? Wir helfen gerne!</p>
+		<div class="footer-actions">
+			<div class="footer-badges">
+				<span class="badge">Kleine Gruppen</span>
+				<span class="badge">Spielerisch</span>
+				<span class="badge">Sicherer Raum</span>
+			</div>
+			<a href="admin/index.html" class="admin-link-button">Admin-Bereich</a>
+		</div>
+	</footer>
+	<script src="js/theme-manager.js"></script>
+	<script src="js/script.js"></script>
 </body>
+
 </html>

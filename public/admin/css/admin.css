@@ -784,6 +784,63 @@ footer {
     background: rgba(11, 11, 13, 0.7);
 }
 
+/* ============================================
+   Theme Toggle (Admin)
+   ============================================ */
+.theme-toggle {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 1000;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    color: var(--text-primary);
+}
+
+.theme-toggle:hover {
+    transform: translateY(-5px) scale(1.1);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+    border-color: var(--accent-primary);
+}
+
+/* ============================================
+   Login Page Layout (Center Content)
+   ============================================ */
+/* When sidebar is hidden (Login State), center the main content */
+body:has(.admin-sidebar.admin-hidden) .admin-content {
+    min-height: 100vh;
+}
+
+body:has(.admin-sidebar.admin-hidden) .admin-main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 2rem;
+}
+
+/* Ensure the login card looks good */
+body:has(.admin-sidebar.admin-hidden) .admin-auth {
+    width: 100%;
+    max-width: 480px;
+    margin: 0;
+    animation: fadeInUp 0.5s ease-out;
+}
+
+body:has(.admin-sidebar.admin-hidden) .admin-topbar {
+    display: none;
+}
+
 .admin-modal-card {
     position: relative;
     background: var(--bg-card);
