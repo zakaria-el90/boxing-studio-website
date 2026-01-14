@@ -4,6 +4,8 @@
 import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
 import { SUPABASE_URL, SUPABASE_KEY } from "./config.js";
 
+console.log("media.js loaded");
+
 const fallbackVideos = [
     {
         id: "_JtW3_G4uZk",
