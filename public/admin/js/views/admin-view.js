@@ -12,6 +12,7 @@ export class AdminView {
         this.sidebar = document.querySelector('[data-layout="sidebar"]');
         this.topbar = document.querySelector(".admin-topbar");
         this.navLinks = document.querySelectorAll("[data-nav]");
+        this.sidebarToggle = document.querySelector(".admin-menu-toggle");
         this.logoutButton = document.querySelector('[data-action="logout"]');
         this.refreshButton = document.querySelector('[data-action="refresh"]');
         this.exportButton = document.querySelector('[data-action="export"]');
@@ -139,8 +140,29 @@ export class AdminView {
     bindNavigation(handler) {
         if (!this.navLinks) return;
         this.navLinks.forEach((link) => {
-            link.addEventListener("click", () => handler(link.dataset.nav));
+            link.addEventListener("click", () => {
+                handler(link.dataset.nav);
+                // Auto-close sidebar on mobile when link is clicked
+                if (window.innerWidth <= 900) {
+                    this.toggleSidebar(false);
+                }
+            });
         });
+    }
+
+    bindSidebarToggle(handler) {
+        if (this.sidebarToggle) {
+            this.sidebarToggle.addEventListener("click", handler);
+        }
+    }
+
+    toggleSidebar(forceState) {
+        if (!this.sidebar) return;
+        if (typeof forceState === "boolean") {
+            this.sidebar.classList.toggle("is-open", forceState);
+        } else {
+            this.sidebar.classList.toggle("is-open");
+        }
     }
 
     bindMemberModalOpen(handler) {

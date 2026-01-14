@@ -19,6 +19,14 @@
         <img src="img/icons/logo-ohne-background.png" alt="Little Champs Boxing Club Logo" class="admin-logo" />
         <h1 class="site-title">Aix-La-Chapelle Fightclub</h1>
         <p class="admin-subtitle">Mitgliederverwaltung &amp; Zahlungsübersicht</p>
+        <button class="admin-menu-toggle" type="button" aria-label="Toggle Navigation">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
       </div>
       <nav class="admin-nav" aria-label="Admin Navigation">
         <button class="admin-nav-link is-active" type="button" data-nav="dashboard">
@@ -76,26 +84,39 @@
           </p>
         </section>
 
-        <section class="hero admin-card admin-auth" data-section="login">
-          <h1>Admin-Anmeldung</h1>
-          <p>Nur autorisiertes Personal sollte auf Mitgliederdetails zugreifen.</p>
-          <form class="admin-form" data-form="login">
-            <label for="login-email">E-Mail *</label>
-            <input id="login-email" type="email" name="email" autocomplete="username" required />
-
-            <label for="login-password">Passwort *</label>
-            <input id="login-password" type="password" name="password" autocomplete="current-password" required />
-
-            <button class="nav-button" type="submit">Anmelden</button>
-
-            <div style="margin-top: 1rem; text-align: center;">
-              <a href="../index.html" class="nav-button admin-ghost" style="width: 100%; justify-content: center;">
-                ← Zurück zur Startseite
-              </a>
+        <div class="admin-auth-container" data-section="login">
+          <section class="admin-auth-card">
+            <div class="admin-auth-header">
+              <img src="img/icons/logo-ohne-background.png" alt="Little Champs Boxing Club Logo"
+                class="admin-auth-logo" />
+              <h1>Admin-Anmeldung</h1>
+              <p>Nur autorisiertes Personal sollte auf Mitgliederdetails zugreifen.</p>
             </div>
-          </form>
-          <p class="form-note" data-status="login"></p>
-        </section>
+
+            <form class="admin-form" data-form="login">
+              <div class="form-group">
+                <label for="login-email">E-Mail</label>
+                <input id="login-email" type="email" name="email" placeholder="ihre@email.de" autocomplete="username"
+                  required />
+              </div>
+
+              <div class="form-group">
+                <label for="login-password">Passwort</label>
+                <input id="login-password" type="password" name="password" placeholder="••••••••"
+                  autocomplete="current-password" required />
+              </div>
+
+              <button class="nav-button login-btn" type="submit">Anmelden</button>
+
+              <div class="auth-footer">
+                <a href="../index.html" class="back-link">
+                  ← Zurück zur Startseite
+                </a>
+              </div>
+            </form>
+            <p class="form-note" data-status="login"></p>
+          </section>
+        </div>
 
         <section class="admin-page" data-page-section="dashboard">
           <div class="admin-page-header">

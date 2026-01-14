@@ -25,6 +25,7 @@ export class AdminController {
         this.view.bindMemberFiltersReset(this.handleMemberFilterReset.bind(this));
         this.view.bindAuditSearch(this.handleAuditSearchChange.bind(this));
         this.view.bindNavigation(this.handleNavigation.bind(this));
+        this.view.bindSidebarToggle(this.handleSidebarToggle.bind(this));
         this.view.bindMemberModalOpen(this.handleMemberModalOpen.bind(this));
         this.view.bindMemberModalClose(this.handleMemberModalClose.bind(this));
         this.view.bindMediaSave(this.handleMediaAdd.bind(this));
@@ -197,6 +198,10 @@ export class AdminController {
 
     handleNavigation(section) {
         this.view.setActiveSection(section);
+    }
+
+    handleSidebarToggle() {
+        this.view.toggleSidebar();
     }
 
     handleMemberModalOpen() {
